@@ -1,0 +1,16 @@
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+.dark{
+  background-color: black;
+  color: white;
+}
+
+.light{
+  background-color: white;
+  color: black;
+  font-style: italic;
+}
+
+.hightlight{
+  border: thin red;
+}
