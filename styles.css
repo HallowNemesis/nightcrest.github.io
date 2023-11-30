@@ -147,6 +147,9 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .button:hover{color:#000!important;background-color:#ccc!important}
 .transparent,.hover-none:hover{background-color:transparent!important}
 .hover-none:hover{box-shadow:none!important}
+.topnav{overflow: hidden;background-color: #333;}
+.topnav-a{float: left;  display: block;  color: #f2f2f2;  text-align: center;  padding: 14px 16px;  text-decoration: none;}
+
 /* Colors */
 .amber,.hover-amber:hover{color:#000!important;background-color:#ffc107!important}
 .aqua,.hover-aqua:hover{color:#000!important;background-color:#00ffff!important}
