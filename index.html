@@ -7,24 +7,35 @@
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="fontstyles.css">
 <style>
-body,h1,h2,h3,h4,h5,h6,h7,h8,h9,h10 {font-family: "Raleway", sans-serif}
+body,h1,h2,h3,h4,h5,h6,h7,h8,h9,h10 {font-family: Arial, Helvetica, "Raleway", sans-serif; margin: 0}
 
 html {
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
 .column {
   float: left;
   width: 33.3%;
   margin-bottom: 16px;
   padding: 0 8px;
 }
+
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 8px;
 }
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
 .container {
   padding: 0 16px;
 }
@@ -34,9 +45,11 @@ html {
   clear: both;
   display: table;
 }
+
 .title {
   color: grey;
 }
+
 .button {
   border: none;
   outline: 0;
@@ -48,6 +61,7 @@ html {
   cursor: pointer;
   width: 100%;
 }
+
 .button:hover {
   background-color: #555;
 }
@@ -84,7 +98,7 @@ and is wrapped around the whole page content, except for the footer in this exam
   
 <!-- Header -->
 <header class="container center padding-32"> 
-  <h5>LIMITLESS TO INFINITE<b></h5>
+  <h5 class="center">LIMITLESS TO INFINITE<b></h5>
   <p>Welcome to the hub of  <br> <span class="tag">gaming</span></p>
 </header>
 
