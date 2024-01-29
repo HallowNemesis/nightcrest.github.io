@@ -15,7 +15,7 @@ playerImage.src = 'gameimgs/shadow_dog.png';
 const spriteWidth = 575;
 const spriteHeight = 523;
 
-let gameSpeed = 10;
+let gameSpeed = 4;
 
 //Background Images
 const backgroundLayer1 = new Image();
@@ -24,11 +24,11 @@ const backgroundLayer3 = new Image();
 const backgroundLayer4 = new Image();
 const backgroundLayer5 = new Image();
 
-backgroundLayer1.scr = 'gameimgs/layer-1.png';
-backgroundLayer2.scr = 'gameimgs/layer-2.png';
-backgroundLayer3.scr = 'gameimgs/layer-3.png';
-backgroundLayer4.scr = 'gameimgs/layer-4.png';
-backgroundLayer5.scr = 'gameimgs/layer-5.png';
+backgroundLayer1.src = 'gameimgs/layer-1.png';
+backgroundLayer2.src = 'gameimgs/layer-2.png';
+backgroundLayer3.src = 'gameimgs/layer-3.png';
+backgroundLayer4.src = 'gameimgs/layer-4.png';
+backgroundLayer5.src = 'gameimgs/layer-5.png';
 
 window.addEventListener('load', function(){
     
@@ -140,7 +140,7 @@ function animate(){
     let frameY = spriteAnimations[playerState].loc[position].y;
 
     //Backgrounds
-    gameObjects.forEach(object =>{
+    gameObjects.forEach(object => {
         object.update();
         object.draw();
     });
