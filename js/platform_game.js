@@ -146,7 +146,7 @@ function animate(){
     });
 
     //Player
-    ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
+    // ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
 
     gameFrame++;
     requestAnimationFrame(animate);
