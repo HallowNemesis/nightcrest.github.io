@@ -2,7 +2,7 @@ let playerState = 'idle';
 const dropdown = document.getElementById('animations');
 dropdown.addEventListener('change',function(e){
     playerState = e.target.value;
-})
+});
 
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
@@ -10,7 +10,7 @@ const CANVAS_WIDTH = canvas.width = 600;
 const CANVAS_HEIGHT = canvas.height = 600;
 
 const playerImage = new Image();
-playerImage.src = 'shadow_dog.png';
+playerImage.src = 'gameimgs/shadow_dog.png';
 let playerState = 'run';
 const spriteWidth = 575;
 const spriteHeight = 523;
@@ -21,8 +21,8 @@ const staggerFrames = 10;
 
 spriteAnimations = [
     {
-    name: 'idle',
-    frames: 7,
+        name: 'idle',
+        frames: 7,
     },
     {
         name: 'jump',
@@ -80,7 +80,7 @@ function animate(){
     let frameX = spriteWidth * position;
     let frameY = spriteAnimations[playerState].loc[position].y;
 
-    ctx.drawImage(playerImage, frameX, frameY * spriteHeight, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
+    ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
 
     gameFrame++;
     requestAnimationFrame(animate);
