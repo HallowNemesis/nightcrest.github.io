@@ -6,13 +6,66 @@ dropdown.addEventListener('change', function(e){
 
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-const CANVAS_WIDTH = canvas.width = 600;
-const CANVAS_HEIGHT = canvas.height = 600;
+const CANVAS_WIDTH = canvas.width = 800;
+const CANVAS_HEIGHT = canvas.height = 700;
 
+// PlayerImage
 const playerImage = new Image();
 playerImage.src = 'gameimgs/shadow_dog.png';
 const spriteWidth = 575;
 const spriteHeight = 523;
+
+let gameSpeed = 10;
+
+//Background Images
+const backgroundLayer1 = new Image();
+const backgroundLayer2 = new Image();
+const backgroundLayer3 = new Image();
+const backgroundLayer4 = new Image();
+const backgroundLayer5 = new Image();
+
+backgroundLayer1.scr = 'gameimgs/layer-1.png';
+backgroundLayer2.scr = 'gameimgs/layer-2.png';
+backgroundLayer3.scr = 'gameimgs/layer-3.png';
+backgroundLayer4.scr = 'gameimgs/layer-4.png';
+backgroundLayer5.scr = 'gameimgs/layer-5.png';
+
+class Layer{
+    constructor(image, speedModifier){
+        this.x = 0;
+        this.y = 0;
+        this.width = 2400;
+        this.height = 700;
+        this.x2 = width;
+        this.image = image;
+        this.speedModifier = speedModifier
+        this.speed = gameSpeed * this.speedModifier;
+    }
+
+    update(){
+        this.speed = gameSpeed * this.speedModifier;
+        if(this.x <= -this.width){
+            this.x = this.width + this.x2 - this.speed;
+        }
+        if(this.x2 <= -this.width){
+            this.x2 = this.width + this.x - this.speed;
+        }
+        this.x = Math.floor(this.x - this.speed);
+        this.x2 = Math.floor(this.x2 - this.speed);
+    }
+    draw(){
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
+        ctx.drawImage(this.image, this.x2, this.y, this.width, this.height)
+    }
+}
+
+const layer1 = new Layer(backgroundLayer1, 0.2); 
+const layer2 = new Layer(backgroundLayer2, 0.4); 
+const layer3 = new Layer(backgroundLayer3, 0.6); 
+const layer4 = new Layer(backgroundLayer4, 0.8); 
+const layer5 = new Layer(backgroundLayer5, 1);
+
+const gameObjects = [layer1, layer2, layer3, layer4, layer5];
 
 let gameFrame = 0;
 const staggerFrames = 10;
@@ -72,6 +125,7 @@ animationStates.forEach((state, index) => {
     }
     spriteAnimations[state.name] = frames;
 });
+console.log(spriteAnimations);
 
 function animate(){
     ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -79,6 +133,13 @@ function animate(){
     let frameX = spriteWidth * position;
     let frameY = spriteAnimations[playerState].loc[position].y;
 
+    //Backgrounds
+    gameObjects.forEach(object =>{
+        object.update();
+        object.draw();
+    });
+
+    //Player
     ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
 
     gameFrame++;
