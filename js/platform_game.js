@@ -16,8 +16,8 @@ const spriteHeight = 523;
 
 let gameFrame = 0;
 const staggerFrames = 10;
-
-spriteAnimations = [
+const spriteAnimations = [];
+const animationStates = [
     {
         name: 'idle',
         frames: 7,
@@ -55,11 +55,12 @@ spriteAnimations = [
         frames: 12,
     },
     {
-        name: 'getHit',
+        name: 'gethit',
         frames: 4,
     }
 
 ];
+
 animationStates.forEach((state, index) => {
     let frames = {
         loc: [],
