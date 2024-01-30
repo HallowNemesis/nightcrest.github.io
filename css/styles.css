@@ -244,7 +244,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
     transform: translate(-50%, -50%);
     top:50%;
     left:50%;
-    border: 3px solid white;
+    border: 3px solid black;
     font-size: 25px;
 }
 #slider{
@@ -256,7 +256,7 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
     height: 700px;
 }
 .controls{
-    position: absolute;
+    position: relative;
     z-index: 10;
     top: center;
     left: 50%;
@@ -265,3 +265,4 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .controls, select, option{
     font-size: 25px;
 }
+
