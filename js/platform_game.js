@@ -31,6 +31,9 @@ backgroundLayer3.src = 'gameimgs/backgrounds/layer-3.png';
 backgroundLayer4.src = 'gameimgs/backgrounds/layer-4.png';
 backgroundLayer5.src = 'gameimgs/backgrounds/layer-5.png';
 
+
+//RUNS THE GAME ONLY WHEN EVERYTHING LOADS
+
 window.addEventListener('load', function(){
     
 const slider = document.getElementById('slider');
@@ -73,49 +76,6 @@ const layer4 = new Layer(backgroundLayer4, 0.8);
 const layer5 = new Layer(backgroundLayer5, 1);
 
 const gameObjects = [layer1, layer2, layer3, layer4, layer5];
-
-
-//ENEMIES
-const numberOfEnemies = 10;
-const enemiesArray = [];
-
-class Enemy{
-    constructor(){
-        this.image = new Image();
-        this.image.src = 'gameimgs/entities/enemy1.png';
-
-       
-        // this.speed = Math.random() * 4 - 2;
-        this.spriteWidth = 293;
-        this.spriteHeight = 155;
-
-        this.width = this.spriteWidth / 2.5;
-        this.height = this.spriteHeight / 2.5;
-        this.x = Math.random() * (canvas.width - this.width);
-        this.y = Math.random() * (canvas.height - this.height);
-
-
-        this.frame = 0;
-        this.flapSpeed = Math.floor(Math.random() * 3 + 1);
-    }
-    update(){
-        this.x += Math.random() * 5 - 2.5;
-        this.y += Math.random() * 5 - 2.5;
-
-        //animations
-        if(gameFrame % this.flapSpeed === 0){
-            this.frame > 4 ? this.frame = 0: this.frame++; 
-        }
-    }
-    draw(){
-        ctx.drawImage(this.image, this.frame * this.spriteWidth,0,this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
-    }
-
-};
-
-for(let i = 0; i < numberOfEnemies; i++){
-    enemiesArray.push(new Enemy());
-}
 
 
 //Player Animations
@@ -179,29 +139,99 @@ animationStates.forEach((state, index) => {
     spriteAnimations[state.name] = frames;
 });
 
-function animate(){
-    ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    let position = Math.floor(gameFrame/staggerFrames) % spriteAnimations[playerState].loc.length;
-    let frameX = spriteWidth * position;
-    let frameY = spriteAnimations[playerState].loc[position].y;
 
+
+class Game{
+    constructor(ctx, width, height){
+        this.ctx = ctx;
+        this.width = width;
+        this.height = height;
+        this.enemies = [];
+        this.enemyInterval = 1000;
+        this.enemyTimer = 0;
+        this.#addNewEnemy();
+    }
+    update(deltaTime){
+        this.enemies = this.enemies.filter(object => !object.markedForDeletion);
+        if(this.enemyTimer > this.enemyInterval){
+            this.enemies.forEach(object => object.update());
+            this.enemyTimer = 0;
+        } else{
+            this.enemyTimer += deltaTime;
+        }
+    }
+    draw(){
+        this.enemies.forEach(object => object.draw(this.ctx));
+    }
+    #addNewEnemy(){
+        this.enemies.push(new Worm(this));
+    }
+}
+
+//Enemies
+class Enemy{
+    constructor(game){
+        this.game = game;
+        this.x = this.game.width;
+        this.y = Math.random() * this.game.height;
+        this.width = 100;
+        this.height = 100;
+        this.markedForDeletion = false;
+    }
+    update(){
+        this.x--;
+        if(this.x < 0 - this.width) this.markedForDeletion = true;
+    }
+    draw(ctx){
+        ctx.drawImage(this.image,0,0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+    }
+
+};
+
+class Worm extends Enemy{
+    constructor(){
+        super(game);
+        this.spriteWidth = 229;
+        this.spriteHeight = 171;
+        this.width = 100;
+        this.height = 100;
+
+        this.x = this.game.width;
+        this.y = Math.random() * this.game.height;
+       
+        this.image = 'gameimgs/entities/raven.png';
+    }
+}
+
+
+
+
+
+const game = new Game(ctx, canvas.width, canvas.width);
+let lastTime = 1;
+function animate(timeStamp){
+    ctx.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp;
+
+
+    // let position = Math.floor(gameFrame/staggerFrames) % spriteAnimations[playerState].loc.length;
+    // let frameX = spriteWidth * position;
+    // let frameY = spriteAnimations[playerState].loc[position].y;
     //Backgrounds
     gameObjects.forEach(object => {
         object.update();
         object.draw();
     });
 
+    game.update(deltaTime);
+    game.draw();
     //Player
     // ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
-
-    enemiesArray.forEach(enemies => {
-        enemies.update();
-        enemies.draw();
-    });
 
     gameFrame++;
     requestAnimationFrame(animate);
 };
-animate();
+animate(0);
 
 });
