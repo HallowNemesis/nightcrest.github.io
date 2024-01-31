@@ -9,7 +9,6 @@ const ctx = canvas.getContext('2d');
 const CANVAS_WIDTH = canvas.width = 1080;
 const CANVAS_HEIGHT = canvas.height = 720;
 let canvasPosition = canvas.getBoundingClientRect();
-console.log(canvasPosition);
 
 let gameSpeed = .5;
 
@@ -69,7 +68,6 @@ window.addEventListener('load', function () {
     const layer3 = new Layer(backgroundLayer3, 0.6);
     const layer4 = new Layer(backgroundLayer4, 0.8);
     const layer5 = new Layer(backgroundLayer5, 1);
-    const explosions = [];
 
 
     class Game {
@@ -77,10 +75,10 @@ window.addEventListener('load', function () {
             this.ctx = ctx;
             this.width = width;
             this.height = height;
-            this.explosions = explosions;
             this.gameObjects = [layer1, layer2, layer3, layer4, layer5];
             this.player = new Player(this);
             this.enemies = [];
+            this.explosions = [];
             this.enemyInterval = 500;
             this.enemyTimer = 0;
             this.enemyTypes = ['worm', 'ghost', 'spider'];
@@ -100,6 +98,11 @@ window.addEventListener('load', function () {
             }
             this.enemies.forEach(object => object.update(deltaTime));
 
+            window.addEventListener('click', function(e){
+                let positionX = e.x - canvasPosition.left;
+                let positionY = e.y - canvasPosition.top;
+                this.explosions.push(new Explosion(positionX, positionY));
+            });
 
             for(let i = 0; i < this.explosions.length; i++){
                 this.explosions[i].update();
@@ -118,7 +121,7 @@ window.addEventListener('load', function () {
             this.enemies.forEach(object => object.draw(this.ctx));
 
             //Explosions
-            this.explosions.forEach(object => object.draw());
+            this.explosions.forEach(object => object.draw)
             // for(let i = 0; i < this.explosions.length; i++){
             //     this.explosions[i].draw();
             // }
@@ -138,12 +141,6 @@ window.addEventListener('load', function () {
 
         
     }
-
-    window.addEventListener('click', function(e){
-        let positionX = e.x - canvasPosition.left;
-        let positionY = e.y - canvasPosition.top;
-        explosions.push(new Explosion(positionX, positionY));
-    });
 
 
     class Player {

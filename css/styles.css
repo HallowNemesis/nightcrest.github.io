@@ -240,11 +240,11 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 /* canvas and game settings */
 #container{
     position: absolute;
-    width: 800px;
+    width: 1800px;
     transform: translate(-50%, -50%);
     top:50%;
     left:50%;
-    border: 3px solid black;
+    border: 3px solid whitesmoke;
     font-size: 25px;
 }
 #slider{
@@ -252,8 +252,8 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 }
 #canvas1{
     position: relative;
-    width: 800px;
-    height: 700px;
+    width: 1800px;
+    height: 1000px;
 }
 .controls{
     position: relative;
