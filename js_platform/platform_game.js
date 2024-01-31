@@ -1,5 +1,4 @@
 /** @type {HTMLCanvasElement} */
-let playerState = 'idle';
 const dropdown = document.getElementById('animations');
 dropdown.addEventListener('change', function (e) {
     playerState = e.target.value;
@@ -7,16 +6,12 @@ dropdown.addEventListener('change', function (e) {
 
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-const CANVAS_WIDTH = canvas.width = 800;
-const CANVAS_HEIGHT = canvas.height = 700;
+const CANVAS_WIDTH = canvas.width = 1080;
+const CANVAS_HEIGHT = canvas.height = 720;
+let canvasPosition = canvas.getBoundingClientRect();
+console.log(canvasPosition);
 
-// PlayerImage
-const playerImage = new Image();
-playerImage.src = 'gameimgs/entities/shadow_dog.png';
-const spriteWidth = 575;
-const spriteHeight = 523;
-
-let gameSpeed = 1;
+let gameSpeed = .5;
 
 //Background Images
 const backgroundLayer1 = new Image();
@@ -74,69 +69,7 @@ window.addEventListener('load', function () {
     const layer3 = new Layer(backgroundLayer3, 0.6);
     const layer4 = new Layer(backgroundLayer4, 0.8);
     const layer5 = new Layer(backgroundLayer5, 1);
-
-
-
-    //Player Animations
-
-    const staggerFrames = 10;
-    const spriteAnimations = []; 
-    const animationStates = [
-        {
-            name: 'idle',
-            frames: 7,
-        },
-        {
-            name: 'jump',
-            frames: 7,
-        },
-        {
-            name: 'fall',
-            frames: 7,
-        },
-        {
-            name: 'run',
-            frames: 9,
-        },
-        {
-            name: 'dizzy',
-            frames: 11,
-        },
-        {
-            name: 'sit',
-            frames: 5,
-        },
-        {
-            name: 'roll',
-            frames: 7,
-        },
-        {
-            name: 'bite',
-            frames: 7,
-        },
-        {
-            name: 'ko',
-            frames: 12,
-        },
-        {
-            name: 'gethit',
-            frames: 4,
-        }
-
-    ];
-
-    animationStates.forEach((state, index) => {
-        let frames = {
-            loc: [],
-        }
-        for (let j = 0; j < state.frames; j++) {
-            let positionX = j * spriteWidth;
-            let positionY = index * spriteHeight;
-            frames.loc.push({ x: positionX, y: positionY });
-        }
-        spriteAnimations[state.name] = frames;
-    });
-
+    const explosions = [];
 
 
     class Game {
@@ -144,7 +77,9 @@ window.addEventListener('load', function () {
             this.ctx = ctx;
             this.width = width;
             this.height = height;
+            this.explosions = explosions;
             this.gameObjects = [layer1, layer2, layer3, layer4, layer5];
+            this.player = new Player(this);
             this.enemies = [];
             this.enemyInterval = 500;
             this.enemyTimer = 0;
@@ -154,6 +89,8 @@ window.addEventListener('load', function () {
             //Backgrounds
             this.gameObjects.forEach(object => object.update(deltaTime));
 
+            this.player.update(deltaTime);
+
             this.enemies = this.enemies.filter(object => !object.markedForDeletion);
             if (this.enemyTimer > this.enemyInterval) {
                 this.#addNewEnemy();
@@ -162,20 +99,33 @@ window.addEventListener('load', function () {
                 this.enemyTimer += deltaTime;
             }
             this.enemies.forEach(object => object.update(deltaTime));
+
+
+            for(let i = 0; i < this.explosions.length; i++){
+                this.explosions[i].update();
+            }
+
+
         }
         draw() {
+            //backgrounds
             this.gameObjects.forEach(object => object.draw(this.ctx));
 
+            //Player
+            this.player.draw(this.ctx);
+
+            //enemies
             this.enemies.forEach(object => object.draw(this.ctx));
 
-            // this.ctx.globalCompositeOperation = 'destination-over';
-
-            // this.ctx.globalCompositeOperation = 'source-over';
+            //Explosions
+            this.explosions.forEach(object => object.draw());
+            // for(let i = 0; i < this.explosions.length; i++){
+            //     this.explosions[i].draw();
+            // }
 
         }
 
         #addNewEnemy() {
-            this.enemies.push(new Worm(this));
             const randomEnemy = this.enemyTypes[Math.floor(Math.random() * this.enemyTypes.length)];
             if (randomEnemy == 'worm') this.enemies.push(new Worm(this));
             if (randomEnemy == 'ghost') this.enemies.push(new Ghost(this));
@@ -185,6 +135,128 @@ window.addEventListener('load', function () {
                 return a.y - b.y;
             });
         }
+
+        
+    }
+
+    window.addEventListener('click', function(e){
+        let positionX = e.x - canvasPosition.left;
+        let positionY = e.y - canvasPosition.top;
+        explosions.push(new Explosion(positionX, positionY));
+    });
+
+
+    class Player {
+        constructor(game) {
+            this.game = game;
+            this.markedForDeletion = false;
+            this.frameX = 0;
+            this.frameY = 3;
+            this.maxFrame = 6;
+            this.frameInterval = 100;
+            this.frameTimer = 0;
+
+            this.spriteWidth = 575;
+            this.spriteHeight = 523;
+            this.width = this.spriteWidth*.25;
+            this.height = this.spriteHeight*.25;
+
+            this.x = this.game.width;
+            this.y = this.game.height - this.height - 135;
+
+            this.image = new Image();
+            this.image.src = "gameimgs/entities/shadow_dog.png";
+            this.vx = Math.random() * 0.1 + 0.1;
+
+            //Player Animations
+            this.staggerFrames = 10;
+            this.spriteAnimations = [];
+            this.animationStates = [];
+            this.playerState = 'idle';
+
+            // this.animationInit();
+        }
+
+        update(deltaTime) {
+            this.x -= this.vx * deltaTime;
+            if (this.x < 0 - this.width) this.markedForDeletion = true;
+
+            if (this.frameTimer > this.frameInterval) {
+                if (this.frameX < this.maxFrame) this.frameX++;
+                else this.frameX = 0;
+                this.frameTimer = 0;
+            } else {
+                this.frameTimer += deltaTime;
+            }
+
+            // let position = Math.floor(deltaTime/this.staggerFrames) % this.spriteAnimations[playerState].loc.length;
+            //  this.frameX = spriteWidth * position;
+            //  this.frameY = spriteAnimations[playerState].loc[position].y;
+      
+        }
+        draw(ctx) {
+            ctx.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+        }
+
+
+        // animationInit() {
+        //             //Player Animations
+        //             this.animationStates = [
+        //                 {
+        //                     name: 'idle',
+        //                     frames: 7,
+        //                 },
+        //                 {
+        //                     name: 'jump',
+        //                     frames: 7,
+        //                 },
+        //                 {
+        //                     name: 'fall',
+        //                     frames: 7,
+        //                 },
+        //                 {
+        //                     name: 'run',
+        //                     frames: 9,
+        //                 },
+        //                 {
+        //                     name: 'dizzy',
+        //                     frames: 11,
+        //                 },
+        //                 {
+        //                     name: 'sit',
+        //                     frames: 5,
+        //                 },
+        //                 {
+        //                     name: 'roll',
+        //                     frames: 7,
+        //                 },
+        //                 {
+        //                     name: 'bite',
+        //                     frames: 7,
+        //                 },
+        //                 {
+        //                     name: 'ko',
+        //                     frames: 12,
+        //                 },
+        //                 {
+        //                     name: 'gethit',
+        //                     frames: 4,
+        //                 }
+        
+        //             ];
+        
+        //             this.animationStates.forEach((state, index) => {
+        //                 let frames = {
+        //                     loc: [],
+        //                 }
+        //                 for (let j = 0; j < state.frames; j++) {
+        //                     let positionX = j * spriteWidth;
+        //                     let positionY = index * spriteHeight;
+        //                     frames.loc.push({ x: positionX, y: positionY });
+        //                 }
+        //                 this.spriteAnimations[state.name] = frames;
+        //         });
+        // }      
     }
 
     //Enemies
@@ -194,8 +266,9 @@ window.addEventListener('load', function () {
             this.markedForDeletion = false;
             this.frameX = 0;
             this.maxFrame = 5;
-            this.frameInterval = 200;
+            this.frameInterval = 5000;
             this.frameTimer = 0;
+
         }
         update(deltaTime) {
             this.x -= this.vx * deltaTime;
@@ -220,11 +293,11 @@ window.addEventListener('load', function () {
             super(game);
             this.spriteWidth = 80;
             this.spriteHeight = 60;
-            this.width = this.spriteWidth / 2;
-            this.height = this.spriteHeight / 2;
+            this.width = this.spriteWidth;
+            this.height = this.spriteHeight;
 
             this.x = this.game.width;
-            this.y = this.game.height - this.height;
+            this.y = this.game.height - this.height - 135;
 
             this.image = new Image();
             this.image.src = "gameimgs/entities/worm.png";
@@ -237,15 +310,15 @@ window.addEventListener('load', function () {
             super(game);
             this.spriteWidth = 60;
             this.spriteHeight = 70;
-            this.width = this.spriteWidth / 2;
-            this.height = this.spriteHeight / 2;
+            this.width = this.spriteWidth*.5;
+            this.height = this.spriteHeight*.5;
 
             this.x = this.game.width;
             this.y = Math.random() * this.game.height * 0.6;
 
             this.image = new Image();
             this.image.src = "gameimgs/entities/ghost4.png";
-          
+
             this.vx = Math.random() * 0.2 + 0.1;
             this.angle = 0;
             this.curve = Math.random() * 3
@@ -269,8 +342,8 @@ window.addEventListener('load', function () {
             super(game);
             this.spriteWidth = 310;
             this.spriteHeight = 175;
-            this.width = this.spriteWidth / 4;
-            this.height = this.spriteHeight / 4;
+            this.width = this.spriteWidth*.25;
+            this.height = this.spriteHeight*.25;
 
             this.x = Math.random() * this.game.width;
             this.y = 0 - this.height;
@@ -289,16 +362,37 @@ window.addEventListener('load', function () {
             this.y += this.vy * deltaTime;
             if (this.y > this.maxLength) this.vy *= -1;
         }
+
         draw(ctx) {
             ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2, 0);
-            ctx.lineTo(this.x + this.width / 2, this.y + 10);
+            ctx.moveTo(this.x + this.width*.5, 0);
+            ctx.lineTo(this.x + this.width*.5, this.y + 10);
             ctx.stroke();
             super.draw(ctx);
         }
     }
 
+    class Explosion{
+        constructor(x,y){
+            this.x = x;
+            this.y = y;
+            this.spriteWidth = 200;
+            this.spriteHeight = 179;
+            this.width = this.spriteWidth*.5;
+            this.height = this.spriteHeight*.5;
+            this.image = new Image();
+            this.image.src = 'gameimgs/objects/boom.png';
+            this.frame = 0;
+        }
 
+        update(){
+            this.frame++;
+        }
+        
+        draw(ctx){
+            ctx.drawImage(this.image, this.spriteWidth * this.frame, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width, this.height);
+        }
+    }
 
 
 
@@ -307,18 +401,10 @@ window.addEventListener('load', function () {
     function animate(timeStamp) {
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp; 
+        lastTime = timeStamp;
 
-        // let position = Math.floor(deltaTime/staggerFrames) % spriteAnimations[playerState].loc.length;
-        // let frameX = spriteWidth * position;
-        // let frameY = spriteAnimations[playerState].loc[position].y;
-      
-
-        game.update(deltaTime);
+        game.update(deltaTime * gameSpeed);
         game.draw();
-
-        //Player
-        // ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0,0, spriteWidth, spriteHeight);
 
         requestAnimationFrame(animate);
     };
