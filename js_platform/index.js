@@ -119,7 +119,7 @@ const player = new Player({
         Death: {
             imageSrc: 'gameimgs/entities/warrior/Death.png',
             frameRate: 6,
-            frameBuffer: 5,
+            frameBuffer: 20,
         },
         GetHit: {
             imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
@@ -128,6 +128,7 @@ const player = new Player({
         },
     }
 });
+
 
 const keys = {
     a: {
@@ -229,34 +230,48 @@ function animate() {
 
     player.velocity.x = 0;
 
-    if (keys.a.pressed) {
-        player.switchSprite('RunLeft');
-        player.velocity.x = -1;
-        player.lastDirection = 'left';
-        player.shouldPanCameraRight({ canvas, camera });
+    if (player.currentlife >= 0) {
+        if (keys.a.pressed) {
+            player.switchSprite('RunLeft');
+            player.velocity.x = -1;
+            player.lastDirection = 'left';
+            player.shouldPanCameraRight({ canvas, camera });
+        }
+        else if (keys.s.pressed) player.velocity.y = 0;
+        else if (keys.d.pressed) {
+            player.switchSprite('Run');
+            player.velocity.x = 1;
+            player.lastDirection = 'right';
+            player.shouldPanCameraLeft({ canvas, camera });
+        }
+        else if (player.velocity.y === 0 && player.velocity.x === 0) {
+            if (player.lastDirection === 'right') player.switchSprite('Idle');
+            else player.switchSprite('IdleLeft');
+        }
+
+        if (player.velocity.y < 0) {
+            player.shouldPanCameraDown({ camera, canvas });
+            if (player.lastDirection === 'right') player.switchSprite('Jump');
+            else player.switchSprite('JumpLeft');
+        } else if (player.velocity.y > 0) {
+            player.shouldPanCameraUp({ camera, canvas });
+            if (player.lastDirection === 'right') player.switchSprite('Fall');
+            else player.switchSprite('FallLeft');
+        }
     }
-    else if (keys.s.pressed) player.velocity.y = 0;
-    else if (keys.d.pressed) {
-        player.switchSprite('Run');
-        player.velocity.x = 1;
-        player.lastDirection = 'right';
-        player.shouldPanCameraLeft({ canvas, camera });
-    }
-    else if (player.velocity.y === 0 && player.velocity.x === 0) {
-        if (player.lastDirection === 'right') player.switchSprite('Idle');
-        else player.switchSprite('IdleLeft');
+    else {
+        player.switchSprite('Death');
     }
 
-    if (player.velocity.y < 0) {
-        player.shouldPanCameraDown({ camera, canvas });
-        if (player.lastDirection === 'right') player.switchSprite('Jump');
-        else player.switchSprite('JumpLeft');
-    } else if (player.velocity.y > 0) {
-        player.shouldPanCameraUp({ camera, canvas });
-        if (player.lastDirection === 'right') player.switchSprite('Fall');
-        else player.switchSprite('FallLeft');
-    }
 
+    /*Create collision between objects*/
+
+    //Must create enemies as well.
+
+    /*Create the damage function */
+
+    // receivedDamage = damage(enemies, player);
+    // player.currentlife -= receivedDamage;
 
     if (keys.f.pressed) {
         player.switchSprite('Attack1');
@@ -326,6 +341,3 @@ window.addEventListener('keyup', (e) => {
 });
 
 window.onkeydown = function (e) { return !(e.key == ' ' && e.target == document.body); };
-
-
-// last change for the night, rid the map of red collision blocks, tried to add a poll for game name, changed animation frames and fixed the space bar from scrolling website.
