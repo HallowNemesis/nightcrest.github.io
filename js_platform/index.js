@@ -64,22 +64,22 @@ const player = new Player({
         Idle: {
             imageSrc: 'gameimgs/entities/warrior/Idle.png',
             frameRate: 8,
-            frameBuffer: 3,
+            frameBuffer: 12,
         },
         IdleLeft: {
             imageSrc: 'gameimgs/entities/warrior/IdleLeft.png',
             frameRate: 8,
-            frameBuffer: 3,
+            frameBuffer: 12,
         },
         Run: {
             imageSrc: 'gameimgs/entities/warrior/Run.png',
             frameRate: 8,
-            frameBuffer: 5,
+            frameBuffer: 8,
         },
         RunLeft: {
             imageSrc: 'gameimgs/entities/warrior/RunLeft.png',
             frameRate: 8,
-            frameBuffer: 5,
+            frameBuffer: 8,
         },
         Jump: {
             imageSrc: 'gameimgs/entities/warrior/Jump.png',
@@ -101,31 +101,31 @@ const player = new Player({
             frameRate: 2,
             frameBuffer: 3,
         },
-        //     Attack1: {
-        //         imageSrc: 'gameimgs/entities/warrior/Attack1.png',
-        //         frameRate: 4,
-        //         frameBuffer: 5,
-        //     },
-        //     Attack2: {
-        //         imageSrc: 'gameimgs/entities/warrior/Attack2.png',
-        //         frameRate: 4,
-        //         frameBuffer: 5,
-        //     },
-        //     Attack3: {
-        //         imageSrc: 'gameimgs/entities/warrior/Attack3.png',
-        //         frameRate: 4,
-        //         frameBuffer: 5,
-        //     },
-        //     Death: {
-        //         imageSrc: 'gameimgs/entities/warrior/Death.png',
-        //         frameRate: 6,
-        //         frameBuffer: 5,
-        //     },
-        //     GetHit: {
-        //         imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
-        //         frameRate: 4,
-        //         frameBuffer: 5,
-        //     },
+        Attack1: {
+            imageSrc: 'gameimgs/entities/warrior/Attack1.png',
+            frameRate: 4,
+            frameBuffer: 5,
+        },
+        Attack2: {
+            imageSrc: 'gameimgs/entities/warrior/Attack2.png',
+            frameRate: 4,
+            frameBuffer: 10,
+        },
+        Attack3: {
+            imageSrc: 'gameimgs/entities/warrior/Attack3.png',
+            frameRate: 4,
+            frameBuffer: 15,
+        },
+        Death: {
+            imageSrc: 'gameimgs/entities/warrior/Death.png',
+            frameRate: 6,
+            frameBuffer: 5,
+        },
+        GetHit: {
+            imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
+            frameRate: 4,
+            frameBuffer: 5,
+        },
     }
 });
 
@@ -137,6 +137,15 @@ const keys = {
         pressed: false,
     },
     s: {
+        pressed: false,
+    },
+    f: {
+        pressed: false,
+    },
+    g: {
+        pressed: false,
+    },
+    v: {
         pressed: false,
     }
 }
@@ -189,10 +198,10 @@ let backgroundArray = [layer1, layer2, layer3, layer4, layer5];
 const backgroundImageHeight = 432;
 
 const camera = {
-  position: {
-    x: 0,
-    y: -backgroundImageHeight + scaledCanvas.height,
-  },
+    position: {
+        x: 0,
+        y: -backgroundImageHeight + scaledCanvas.height,
+    },
 }
 
 
@@ -224,14 +233,14 @@ function animate() {
         player.switchSprite('RunLeft');
         player.velocity.x = -1;
         player.lastDirection = 'left';
-        player.shouldPanCameraRight({canvas, camera});
+        player.shouldPanCameraRight({ canvas, camera });
     }
     else if (keys.s.pressed) player.velocity.y = 0;
     else if (keys.d.pressed) {
         player.switchSprite('Run');
         player.velocity.x = 1;
         player.lastDirection = 'right';
-        player.shouldPanCameraLeft({canvas, camera});
+        player.shouldPanCameraLeft({ canvas, camera });
     }
     else if (player.velocity.y === 0 && player.velocity.x === 0) {
         if (player.lastDirection === 'right') player.switchSprite('Idle');
@@ -243,9 +252,22 @@ function animate() {
         if (player.lastDirection === 'right') player.switchSprite('Jump');
         else player.switchSprite('JumpLeft');
     } else if (player.velocity.y > 0) {
-        player.shouldPanCameraUp({camera, canvas});
+        player.shouldPanCameraUp({ camera, canvas });
         if (player.lastDirection === 'right') player.switchSprite('Fall');
         else player.switchSprite('FallLeft');
+    }
+
+
+    if (keys.f.pressed) {
+        player.switchSprite('Attack1');
+    }
+
+    else if (keys.g.pressed) {
+        player.switchSprite('Attack2');
+    }
+
+    else if (keys.v.pressed) {
+        player.switchSprite('Attack3');
     }
 
     ctx.restore();
@@ -268,6 +290,15 @@ window.addEventListener('keydown', (e) => {
         case 'd':
             keys.d.pressed = true;
             break;
+        case 'f':
+            keys.f.pressed = true;
+            break;
+        case 'g':
+            keys.g.pressed = true;
+            break;
+        case 'v':
+            keys.v.pressed = true;
+            break;
     }
 });
 
@@ -282,5 +313,19 @@ window.addEventListener('keyup', (e) => {
         case 'd':
             keys.d.pressed = false;
             break;
+        case 'f':
+            keys.f.pressed = false;
+            break;
+        case 'g':
+            keys.g.pressed = false;
+            break;
+        case 'v':
+            keys.v.pressed = false;
+            break;
     }
 });
+
+window.onkeydown = function (e) { return !(e.key == ' ' && e.target == document.body); };
+
+
+// last change for the night, rid the map of red collision blocks, tried to add a poll for game name, changed animation frames and fixed the space bar from scrolling website.
