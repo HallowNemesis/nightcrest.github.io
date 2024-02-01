@@ -1,14 +1,14 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-const CANVAS_WIDTH = canvas.width = 1080;
-const CANVAS_HEIGHT = canvas.height = 900;
+const CANVAS_WIDTH = canvas.width = 800;
+const CANVAS_HEIGHT = canvas.height = 640;
 
 const scaledCanvas = {
     width: canvas.width / 4,
     height: canvas.height / 4,
 }
 
-const gravity = 0.25;
+const gravity = 0.2;
 
 const floorCollisions2D = [];
 for (let i = 0; i < floorCollisions.length; i += 36) {
@@ -35,15 +35,16 @@ for (let i = 0; i < platformCollisions.length; i += 36) {
     platformCollisions2D.push(platformCollisions.slice(i, i + 36));
 }
 
-const plaftformCollisionBlocks = [];
+const platformCollisionBlocks = [];
 platformCollisions2D.forEach((row, y) => {
     row.forEach((symbol, x) => {
         if (symbol === 202) {
-            plaftformCollisionBlocks.push(new CollisionBlock({
+            platformCollisionBlocks.push(new CollisionBlock({
                 position: {
                     x: x * 16,
                     y: y * 16,
                 },
+                height: 4,
             })
             )
         }
@@ -51,89 +52,84 @@ platformCollisions2D.forEach((row, y) => {
 })
 
 const player = new Player({
-    position:{
-        x: 50,
-        y: 0,
+    position: {
+        x: 100,
+        y: 300,
     },
     collisionBlocks,
+    platformCollisionBlocks,
     imageSrc: 'gameimgs/entities/warrior/Idle.png',
-   frameRate: 8,
-   animations: {
-    Idle: {
-        imageSrc: 'gameimgs/entities/warrior/Idle.png',
-        frameRate: 8,
-        frameBuffer: 3,
-    },
-    IdleLeft: {
-        imageSrc: 'gameimgs/entities/warrior/IdleLeft.png',
-        frameRate: 8,
-        frameBuffer: 3,
-    },
-    Run: {
-        imageSrc: 'gameimgs/entities/warrior/Run.png',
-        frameRate: 8,
-        frameBuffer: 7,
-    },
-    RunLeft: {
-        imageSrc: 'gameimgs/entities/warrior/RunLeft.png',
-        frameRate: 8,
-        frameBuffer: 7,
-    },
-    Jump: {
-        imageSrc: 'gameimgs/entities/warrior/Jump.png',
-        frameRate: 2,
-        frameBuffer: 5,
-    },
-//     JumpLeft: {
-//         imageSrc: 'gameimgs/entities/warrior/JumpLeft.png',
-//         frameRate: 2,
-//         frameBuffer: 5,
-//     },
-//     Fall: {
-//         imageSrc: 'gameimgs/entities/warrior/Fall.png',
-//         frameRate: 2,
-//         frameBuffer: 5,
-//     },
-//     FallLeft: {
-//         imageSrc: 'gameimgs/entities/warrior/FallLeft.png',
-//         frameRate: 2,
-//         frameBuffer: 5,
-//     },
-//     Attack1: {
-//         imageSrc: 'gameimgs/entities/warrior/Attack1.png',
-//         frameRate: 4,
-//         frameBuffer: 5,
-//     },
-//     Attack2: {
-//         imageSrc: 'gameimgs/entities/warrior/Attack2.png',
-//         frameRate: 4,
-//         frameBuffer: 5,
-//     },
-//     Attack3: {
-//         imageSrc: 'gameimgs/entities/warrior/Attack3.png',
-//         frameRate: 4,
-//         frameBuffer: 5,
-//     },
-//     Death: {
-//         imageSrc: 'gameimgs/entities/warrior/Death.png',
-//         frameRate: 6,
-//         frameBuffer: 5,
-//     },
-//     GetHit: {
-//         imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
-//         frameRate: 4,
-//         frameBuffer: 5,
-//     },
-   }
+    frameRate: 8,
+    animations: {
+        Idle: {
+            imageSrc: 'gameimgs/entities/warrior/Idle.png',
+            frameRate: 8,
+            frameBuffer: 3,
+        },
+        IdleLeft: {
+            imageSrc: 'gameimgs/entities/warrior/IdleLeft.png',
+            frameRate: 8,
+            frameBuffer: 3,
+        },
+        Run: {
+            imageSrc: 'gameimgs/entities/warrior/Run.png',
+            frameRate: 8,
+            frameBuffer: 5,
+        },
+        RunLeft: {
+            imageSrc: 'gameimgs/entities/warrior/RunLeft.png',
+            frameRate: 8,
+            frameBuffer: 5,
+        },
+        Jump: {
+            imageSrc: 'gameimgs/entities/warrior/Jump.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+        JumpLeft: {
+            imageSrc: 'gameimgs/entities/warrior/JumpLeft.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+        Fall: {
+            imageSrc: 'gameimgs/entities/warrior/Fall.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+        FallLeft: {
+            imageSrc: 'gameimgs/entities/warrior/FallLeft.png',
+            frameRate: 2,
+            frameBuffer: 3,
+        },
+        //     Attack1: {
+        //         imageSrc: 'gameimgs/entities/warrior/Attack1.png',
+        //         frameRate: 4,
+        //         frameBuffer: 5,
+        //     },
+        //     Attack2: {
+        //         imageSrc: 'gameimgs/entities/warrior/Attack2.png',
+        //         frameRate: 4,
+        //         frameBuffer: 5,
+        //     },
+        //     Attack3: {
+        //         imageSrc: 'gameimgs/entities/warrior/Attack3.png',
+        //         frameRate: 4,
+        //         frameBuffer: 5,
+        //     },
+        //     Death: {
+        //         imageSrc: 'gameimgs/entities/warrior/Death.png',
+        //         frameRate: 6,
+        //         frameBuffer: 5,
+        //     },
+        //     GetHit: {
+        //         imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
+        //         frameRate: 4,
+        //         frameBuffer: 5,
+        //     },
+    }
 });
 
 const keys = {
-    space: {
-        pressed: false,
-    },
-    w: {
-        pressed: false,
-    },
     a: {
         pressed: false,
     },
@@ -189,6 +185,17 @@ const layer5 = new Sprite({
     imageSrc: 'gameimgs/backgrounds/layer-5.png',
 })
 let backgroundArray = [layer1, layer2, layer3, layer4, layer5];
+
+const backgroundImageHeight = 432;
+
+const camera = {
+  position: {
+    x: 0,
+    y: -backgroundImageHeight + scaledCanvas.height,
+  },
+}
+
+
 function animate() {
     window.requestAnimationFrame(animate);
     ctx.fillStyle = 'white';
@@ -197,51 +204,51 @@ function animate() {
     // backgroundArray.forEach(object => object.update());
     ctx.save();
     ctx.scale(4, 4);
-    ctx.translate(0, -defaultBackground.image.height + scaledCanvas.height);
+    ctx.translate(camera.position.x, camera.position.y);
     defaultBackground.update();
-    
+
     collisionBlocks.forEach((collisionBlock) => {
         collisionBlock.update();
     });
 
-    plaftformCollisionBlocks.forEach((block) => {
+    platformCollisionBlocks.forEach((block) => {
         block.update();
     });
 
+    player.checkForHorizontalCanvasCollision();
     player.update();
 
     player.velocity.x = 0;
 
-    if (keys.space.pressed || keys.w.pressed) player.velocity.y = -5;
-    else if (keys.a.pressed) {
+    if (keys.a.pressed) {
         player.switchSprite('RunLeft');
         player.velocity.x = -1;
         player.lastDirection = 'left';
+        player.shouldPanCameraRight({canvas, camera});
     }
     else if (keys.s.pressed) player.velocity.y = 0;
     else if (keys.d.pressed) {
         player.switchSprite('Run');
-        player.lastDirection = 'right;'
         player.velocity.x = 1;
+        player.lastDirection = 'right';
+        player.shouldPanCameraLeft({canvas, camera});
     }
-    else if(player.velocity.y === 0 && player.velocity.x === 0){
-        player.switchSprite('Idle');
+    else if (player.velocity.y === 0 && player.velocity.x === 0) {
+        if (player.lastDirection === 'right') player.switchSprite('Idle');
+        else player.switchSprite('IdleLeft');
     }
 
-    // if(player.velocity.y < 0){
-    //     player.switchSprite('Jump');
-    // } else if(player.velocity.y > 0) {
-    //     if(player.lastDirection === 'right') {
-    //         player.switchSprite('Fall');
-    //     }
-    //     else{
-    //         player.switchSprite('FallLeft');
-    //     }
-    // }
+    if (player.velocity.y < 0) {
+        player.shouldPanCameraDown({ camera, canvas });
+        if (player.lastDirection === 'right') player.switchSprite('Jump');
+        else player.switchSprite('JumpLeft');
+    } else if (player.velocity.y > 0) {
+        player.shouldPanCameraUp({camera, canvas});
+        if (player.lastDirection === 'right') player.switchSprite('Fall');
+        else player.switchSprite('FallLeft');
+    }
 
     ctx.restore();
-
-
 }
 
 animate();
@@ -249,10 +256,8 @@ animate();
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
         case ' ':
-            keys.space.pressed = true;
-            break;
         case 'w':
-            keys.w.pressed = true;
+            player.velocity.y = -5;
             break;
         case 'a':
             keys.a.pressed = true;
@@ -268,12 +273,6 @@ window.addEventListener('keydown', (e) => {
 
 window.addEventListener('keyup', (e) => {
     switch (e.key) {
-        case ' ':
-            keys.space.pressed = false;
-            break;
-        case 'w':
-            keys.w.pressed = false;
-            break;
         case 'a':
             keys.a.pressed = false;
             break;
