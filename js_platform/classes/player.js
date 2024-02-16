@@ -234,8 +234,4 @@ class Player extends Sprite {
         }
     }
 
-    setPosition(position){
-        this.position = position;
-    }
-
 }
