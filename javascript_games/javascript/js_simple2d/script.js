@@ -13,8 +13,22 @@ image.src = '/gameimgs/backgrounds/simple2d/Pellet Town.png';
 const playerImage = new Image();
 playerImage.src = '/gameimgs/backgrounds/simple2d/playerDown.png';
 
-image.onload = () => {
-    c.drawImage(image, -750, -650);
-    c.drawImage(playerImage, canvas.width / 2 - playerImage.width / 2, canvas.height / 2 - playerImage.height / 2);
 
+image.onload = () => {
+    c.drawImage(image, -785, -650);
+    c.drawImage(playerImage, 0, 0, playerImage.width / 4, playerImage.height, canvas.width / 2 - playerImage.width / 4 / 2, canvas.height /2 - playerImage.height /2,
+    playerImage.width/4, playerImage.height);
 }
+
+window.addEventListener('keydown', (e) => {
+    switch (e.key) {
+        case 'w':
+            break;
+        case 'a':
+            break;
+        case 'a':
+            break;
+        case 'd':
+            break;
+    }
+});

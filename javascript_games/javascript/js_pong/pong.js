@@ -110,7 +110,6 @@ function moveBall(dx, dy, dxd, dyd) {
         ball_coord = initial_ball_coord;
         ball.style = initial_ball.style;
         message.innerHTML = 'Press Enter to Play Pong';
-        message.style.left = 'vw';
         return;
     }
     ball.style.top = ball_coord.top + dy * (dyd == 0 ? -1 : 1) + 'px';

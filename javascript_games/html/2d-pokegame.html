@@ -1,9 +1,57 @@
-<style>
-    body{
-        background-color: black;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en-US">
 
-<canvas></canvas>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" CONTENT="width=device-width, initial-scale=1.0">
+    <title>Hallow Nemesis - Javascript pokegame</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/fontstyles.css" />
 
-<script src="/javascript_games/javascript/js_simple2d/script.js"></script>
+    <!-- This script is for google ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3259707707501940"
+        crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background: black;
+        }
+
+        canvas {
+            position: absolute;
+            border: rgb(128, 0, 0) solid 3px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="row padding black">
+            <div class="col s3">
+                <a href="/index.html" class="button block black">Home</a>
+            </div>
+            <div class="col s3">
+                <a href="/about.html" class="button block black">About</a>
+            </div>
+            <div class="col s3">
+                <a href="/tempGameholder.html" class="button block black">Games</a>
+            </div>
+            <div class="col s3">
+                <a href="/#where" class="button block black">Where</a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <canvas style="margin-top: 10px;"></canvas>
+
+        <script src="/javascript_games/javascript/js_simple2d/script.js"></script>
+    </div>
+</body>
+
+</html>
