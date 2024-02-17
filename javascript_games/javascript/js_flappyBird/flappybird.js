@@ -1,24 +1,20 @@
+// Background scrolling speed 
 let move_speed = 3; 
     
 // Gravity constant value 
-let gravity = 0.5; 
+let gravity = 0.3; 
     
 // Getting reference to the bird element 
 let bird = document.querySelector('.bird'); 
     
 // Getting bird element properties 
 let bird_props = bird.getBoundingClientRect(); 
-let background = 
-    document.querySelector('.background') 
-            .getBoundingClientRect(); 
+let background = document.querySelector('.play-board').getBoundingClientRect(); 
     
 // Getting reference to the score element 
-let score_val = 
-    document.querySelector('.score_val'); 
-let message = 
-    document.querySelector('.message'); 
-let score_title = 
-    document.querySelector('.score_title'); 
+let score_val = document.querySelector('.score_val'); 
+let message = document.querySelector('.message'); 
+let score_title = document.querySelector('.score_title'); 
     
 // Setting initial game state to start 
 let game_state = 'Start'; 
