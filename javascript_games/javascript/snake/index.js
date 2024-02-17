@@ -1,7 +1,7 @@
 const playBoard = document.querySelector(".play-board");
 const scoreElement = document.querySelector(".score");
 const highscoreElement = document.querySelector(".high-score");
-const controls = document.querySelectorAll("controls");
+const controls = document.querySelectorAll(".controls");
 
 let gameOver = false;
 let foodX, foodY;
@@ -11,7 +11,7 @@ let velocityX = 0, velocityY = 0;
 let setIntervalId;
 let score = 0;
 let highscore = localStorage.getItem("high-score") || 0;
-highscoreElement.innerText = `High Schore: $(highScore)`;
+highscoreElement.innerText = `High Score: ${highscore}`;
 const changeFoodPosition = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
     foodY = Math.floor(Math.random() * 30) + 1;

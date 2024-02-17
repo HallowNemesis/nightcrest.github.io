@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="/css/fontstyles.css" />
 
     <style>
-        body{
+        body {
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             background: #E3F2FD;
         }
+
         .wrapper {
             width: 65vmin;
             height: 70vmin;
@@ -27,7 +28,8 @@
             border-radius: 5px;
             background: #293447;
         }
-        .game-details{
+
+        .game-details {
             color: #B8C6DC;
             font-size: 1.2rem;
             font-weight: 500;
@@ -35,6 +37,7 @@
             display: flex;
             justify-content: space-between;
         }
+
         .play-board {
             width: 100%;
             height: 100%;
@@ -42,12 +45,20 @@
             grid-template: repeat(30, 1fr) / repeat(30, 1fr);
             background: #212837;
         }
-        .play-board .food{background: #FF003D;}
-        .play-board .head{background: #00ff00;}
+
+        .play-board .food {
+            background: #FF003D;
+        }
+
+        .play-board .head {
+            background: #00ff00;
+        }
+
         .controls {
             display: none;
             justify-self: space-between;
         }
+
         .controls i {
             padding: 25px 0;
             color: #B8C6DC;
@@ -57,26 +68,30 @@
             width: calc(100% / 4);
             border-right: 1px solid #171b26;
         }
-        @media screen and (max-width: 800px){
-            wrapper{
+
+        @media screen and (max-width: 800px) {
+            wrapper {
                 width: 90vmin;
                 height: 115vmin;
             }
-            .game-details{
+
+            .game-details {
                 font-size: 1rem;
                 padding: 15px 27px;
             }
-            .controls{
+
+            .controls {
                 display: flex;
             }
-            .controls i{
+
+            .controls i {
                 padding: 15px 0;
                 font-size: 1rem;
             }
         }
     </style>
 
-<script src="/javascript_games/javascript/snake/index.js" defer></script>
+    <script src="/javascript_games/javascript/snake/index.js" defer></script>
     <!-- This script is for google ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3259707707501940"
         crossorigin="anonymous"></script>
@@ -85,6 +100,23 @@
 
 
 <body>
+    <div class="top">
+        <div class="row padding black">
+            <div class="col s3">
+                <a href="/index.html" class="button block black">Home</a>
+            </div>
+            <div class="col s3">
+                <a href="/about.html" class="button block black">About</a>
+            </div>
+            <div class="col s3">
+                <a href="/tempGameholder.html" class="button block black">Games</a>
+            </div>
+            <div class="col s3">
+                <a href="/#where" class="button block black">Where</a>
+            </div>
+        </div>
+    </div>
+
     <div class="wrapper">
         <div class="game-details">
             <span class="score">Score: 0</span>
@@ -92,10 +124,10 @@
         </div>
         <div class="play-board"></div>
         <div class="controls">
-            <i data-key="ArrowLeft" >↑</i>
-            <i data-key="ArrowUp" >↓</i>
-            <i data-key="ArrowDown" >←</i>
-            <i data-key="ArrowRight" >→</i>
+            <i data-key="ArrowLeft">↑</i>
+            <i data-key="ArrowUp">↓</i>
+            <i data-key="ArrowDown">←</i>
+            <i data-key="ArrowRight">→</i>
         </div>
     </div>
 </body>
