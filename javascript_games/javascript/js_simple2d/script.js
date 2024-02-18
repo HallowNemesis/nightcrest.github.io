@@ -120,6 +120,14 @@ const keys = {
 
 const movables = [background, ...boundaries, foreground, ...battleZones];
 
+const renderables = [
+    background,
+    ...boundaries,
+    ...battleZones,
+    player,
+    foreground
+]
+
 function rectangularCollision({ rectangle1, rectangle2 }) {
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
@@ -134,19 +142,11 @@ const battle = {
 }
 
 function animate() {
-    const animationId = window.requestAnimationFrame(animate);
 
-    background.draw();
-
-
-    boundaries.forEach((boundary) => {
-        boundary.draw();
-    });
-    battleZones.forEach((battleZone) => {
-        battleZone.draw();
-    });
-    player.draw();
-    foreground.draw();
+    const animationId = window.requestAnimationFrame(animate)
+    renderables.forEach((renderable) => {
+        renderable.draw()
+    })
 
 
     let moving = true;
@@ -156,32 +156,34 @@ function animate() {
     //activate a battle
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         for (let i = 0; i < battleZones.length; i++) {
-            const battleZone = battleZones[i];
-            const overlappingArea = (Math.min(
-                player.position.x + player.width,
-                battleZone.position.x + battleZone.width
-            ) -
-                Math.max(player.position.x, battleZone.position.x)) * (Math.min(
+            const battleZone = battleZones[i]
+            const overlappingArea =
+                (Math.min(
+                    player.position.x + player.width,
+                    battleZone.position.x + battleZone.width
+                ) -
+                    Math.max(player.position.x, battleZone.position.x)) *
+                (Math.min(
                     player.position.y + player.height,
                     battleZone.position.y + battleZone.height
                 ) -
-                    Math.max(player.position.y, battleZone.position.y));
+                    Math.max(player.position.y, battleZone.position.y))
             if (
                 rectangularCollision({
                     rectangle1: player,
                     rectangle2: battleZone
-                }) && overlappingArea > (player.width * player.height) / 2 &&
-                Math.random() < 0.005
+                }) &&
+                overlappingArea > (player.width * player.height) / 2 &&
+                Math.random() < 0.01
             ) {
-                console.log('battle encounter');
-                //deactivate current animation loop
-                window.cancelAnimationFrame(animationId);
+                // deactivate current animation loop
+                window.cancelAnimationFrame(animationId)
 
-                audio.Map.stop();
-                audio.initBattle.play();
-                audio.battle.play();
-                
-                battle.initiated = true;
+                audio.Map.stop()
+                audio.initBattle.play()
+                audio.battle.play()
+
+                battle.initiated = true
                 gsap.to('#overlappingDiv', {
                     opacity: 1,
                     repeat: 3,
@@ -192,19 +194,18 @@ function animate() {
                             opacity: 1,
                             duration: 0.4,
                             onComplete() {
-                                //activate new animation loop
-                                initBattle();
-                                animateBattle();
+                                // activate a new animation loop
+                                initBattle()
+                                animateBattle()
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0,
                                     duration: 0.4
-                                });
+                                })
                             }
                         })
                     }
-                });
-
-                break;
+                })
+                break
             }
         }
     }
@@ -226,7 +227,6 @@ function animate() {
                     }
                 })
             ) {
-                console.log('colliding');
                 moving = false;
                 break;
             }
@@ -256,7 +256,6 @@ function animate() {
                     }
                 })
             ) {
-                console.log('colliding');
                 moving = false;
                 break;
             }
@@ -285,7 +284,6 @@ function animate() {
                     }
                 })
             ) {
-                console.log('colliding');
                 moving = false;
                 break;
             }
@@ -313,7 +311,6 @@ function animate() {
                     }
                 })
             ) {
-                console.log('colliding');
                 moving = false;
                 break;
             }
@@ -326,7 +323,7 @@ function animate() {
         }
     }
 }
-animate();
+// animate();
 
 
 let lastKey = '';
@@ -370,8 +367,8 @@ window.addEventListener('keyup', (e) => {
 });
 
 let clicked;
-window.addEventListener('click', () =>{
-    if(!clicked){
+window.addEventListener('click', () => {
+    if (!clicked) {
         audio.Map.play();
         clicked = true;
     }
