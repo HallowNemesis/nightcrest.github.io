@@ -10,22 +10,30 @@
     <link rel="stylesheet" href="/css/fontstyles.css" />
     <style>
         :root {
-            --primary-text-color: #27374d;
+            --primary-text-color: white;
         }
 
         * {
             box-sizing: border-box;
             padding: 0%;
             margin: 0%;
+            font-family: "Montserrat", sans-serif;
+            font-family: "Ubuntu", sans-serif;
         }
 
         body {
             background-color: slategrey;
             color: var(--primary-text-color);
             min-height: 100vh;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            
+            position: relative;
+            height: 50vh;
         }
 
         .container {
@@ -35,9 +43,6 @@
             align-items: center;
             justify-content: center;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
 
         .score {
@@ -53,10 +58,12 @@
 
         .score-title {
             width: 50%;
+            position: absolute;
         }
 
         .score-value {
             width: 50%;
+            position: absolute;
         }
 
         .result {
@@ -81,7 +88,6 @@
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            transition: transform .2s ease-in;
         }
 
         .rules {
@@ -119,68 +125,69 @@
             </div>
         </div>
     </div>
-    <p class="score-title">Score:</p>
-    <p class="score-value">0</p>
 
-    <div class="container">
-        <div class="score">
-            <p class="score-title">Score:</p>
-            <p class="score-value">0</p>
-        </div>
 
-        <div class="result"></div>
-        <div class="grid">
-            <div class="grid-item">
-                <p id="1"></p>
+    <div class="wrapper">
+
+        <div class="container">
+            <div class="score">
+                <p class="score-title">Score:</p>
+                <p class="score-value">0</p>
             </div>
-            <div class="grid-item">
-                <p id="2"></p>
-            </div>
-            <div class="grid-item">
-                <p id="3"></p>
-            </div>
-            <div class="grid-item">
-                <p id="4"></p>
-            </div>
-            <div class="grid-item">
-                <p id="5"></p>
-            </div>
-            <div class="grid-item">
-                <p id="6"></p>
-            </div>
-            <div class="grid-item">
-                <p id="7"></p>
-            </div>
-            <div class="grid-item">
-                <p id="8"></p>
-            </div>
-            <div class="grid-item">
-                <p id="9"></p>
-            </div>
-            <div class="grid-item">
-                <p id="10"></p>
-            </div>
-            <div class="grid-item">
-                <p id="11"></p>
-            </div>
-            <div class="grid-item">
-                <p id="12"></p>
-            </div>
-            <div class="grid-item">
-                <p id="13"></p>
-            </div>
-            <div class="grid-item">
-                <p id="14"></p>
-            </div>
-            <div class="grid-item">
-                <p id="15"></p>
-            </div>
-            <div class="grid-item">
-                <p id="16"></p>
+            <div class="result"></div>
+            <div class="grid">
+                <div class="grid-item">
+                    <p id="1"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="2"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="3"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="4"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="5"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="6"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="7"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="8"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="9"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="10"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="11"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="12"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="13"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="14"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="15"></p>
+                </div>
+                <div class="grid-item">
+                    <p id="16"></p>
+                </div>
             </div>
         </div>
     </div>
-    <script src="/javascript_games/javascript/2048/2048.js"></script>
+    <script src="/javascript_games/javascript/js_2048/2048.js"></script>
 </body>
 
 </html>
