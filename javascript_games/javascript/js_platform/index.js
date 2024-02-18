@@ -58,71 +58,71 @@ const player = new Player({
     },
     collisionBlocks,
     platformCollisionBlocks,
-    imageSrc: 'gameimgs/entities/warrior/Idle.png',
+    imageSrc: '/gameimgs/entities/warrior/Idle.png',
     frameRate: 8,
     animations: {
         Idle: {
-            imageSrc: 'gameimgs/entities/warrior/Idle.png',
+            imageSrc: '/gameimgs/entities/warrior/Idle.png',
             frameRate: 8,
             frameBuffer: 12,
         },
         IdleLeft: {
-            imageSrc: 'gameimgs/entities/warrior/IdleLeft.png',
+            imageSrc: '/gameimgs/entities/warrior/IdleLeft.png',
             frameRate: 8,
             frameBuffer: 12,
         },
         Run: {
-            imageSrc: 'gameimgs/entities/warrior/Run.png',
+            imageSrc: '/gameimgs/entities/warrior/Run.png',
             frameRate: 8,
             frameBuffer: 8,
         },
         RunLeft: {
-            imageSrc: 'gameimgs/entities/warrior/RunLeft.png',
+            imageSrc: '/gameimgs/entities/warrior/RunLeft.png',
             frameRate: 8,
             frameBuffer: 8,
         },
         Jump: {
-            imageSrc: 'gameimgs/entities/warrior/Jump.png',
+            imageSrc: '/gameimgs/entities/warrior/Jump.png',
             frameRate: 2,
             frameBuffer: 3,
         },
         JumpLeft: {
-            imageSrc: 'gameimgs/entities/warrior/JumpLeft.png',
+            imageSrc: '/gameimgs/entities/warrior/JumpLeft.png',
             frameRate: 2,
             frameBuffer: 3,
         },
         Fall: {
-            imageSrc: 'gameimgs/entities/warrior/Fall.png',
+            imageSrc: '/gameimgs/entities/warrior/Fall.png',
             frameRate: 2,
             frameBuffer: 3,
         },
         FallLeft: {
-            imageSrc: 'gameimgs/entities/warrior/FallLeft.png',
+            imageSrc: '/gameimgs/entities/warrior/FallLeft.png',
             frameRate: 2,
             frameBuffer: 3,
         },
         Attack1: {
-            imageSrc: 'gameimgs/entities/warrior/Attack1.png',
+            imageSrc: '/gameimgs/entities/warrior/Attack1.png',
             frameRate: 4,
             frameBuffer: 5,
         },
         Attack2: {
-            imageSrc: 'gameimgs/entities/warrior/Attack2.png',
+            imageSrc: '/gameimgs/entities/warrior/Attack2.png',
             frameRate: 4,
             frameBuffer: 10,
         },
         Attack3: {
-            imageSrc: 'gameimgs/entities/warrior/Attack3.png',
+            imageSrc: '/gameimgs/entities/warrior/Attack3.png',
             frameRate: 4,
             frameBuffer: 15,
         },
         Death: {
-            imageSrc: 'gameimgs/entities/warrior/Death.png',
+            imageSrc: '/gameimgs/entities/warrior/Death.png',
             frameRate: 6,
             frameBuffer: 20,
         },
         GetHit: {
-            imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
+            imageSrc: '/gameimgs/entities/warrior/TakeHit.png',
             frameRate: 4,
             frameBuffer: 5,
         },
@@ -130,83 +130,83 @@ const player = new Player({
 });
 
 const enemies = [];
-const enemy = new Enemy({
-    position: {
-        x: 120,
-        y: 300,
-    },
-    collisionBlocks,
-    platformCollisionBlocks,
-    imageSrc: 'gameimgs/entities/warrior/Idle.png',
-    frameRate: 8,
-    animations: {
-        Idle: {
-            imageSrc: 'gameimgs/entities/warrior/Idle.png',
-            frameRate: 8,
-            frameBuffer: 12,
-        },
-        IdleLeft: {
-            imageSrc: 'gameimgs/entities/warrior/IdleLeft.png',
-            frameRate: 8,
-            frameBuffer: 12,
-        },
-        Run: {
-            imageSrc: 'gameimgs/entities/warrior/Run.png',
-            frameRate: 8,
-            frameBuffer: 8,
-        },
-        RunLeft: {
-            imageSrc: 'gameimgs/entities/warrior/RunLeft.png',
-            frameRate: 8,
-            frameBuffer: 8,
-        },
-        Jump: {
-            imageSrc: 'gameimgs/entities/warrior/Jump.png',
-            frameRate: 2,
-            frameBuffer: 3,
-        },
-        JumpLeft: {
-            imageSrc: 'gameimgs/entities/warrior/JumpLeft.png',
-            frameRate: 2,
-            frameBuffer: 3,
-        },
-        Fall: {
-            imageSrc: 'gameimgs/entities/warrior/Fall.png',
-            frameRate: 2,
-            frameBuffer: 3,
-        },
-        FallLeft: {
-            imageSrc: 'gameimgs/entities/warrior/FallLeft.png',
-            frameRate: 2,
-            frameBuffer: 3,
-        },
-        Attack1: {
-            imageSrc: 'gameimgs/entities/warrior/Attack1.png',
-            frameRate: 4,
-            frameBuffer: 5,
-        },
-        Attack2: {
-            imageSrc: 'gameimgs/entities/warrior/Attack2.png',
-            frameRate: 4,
-            frameBuffer: 10,
-        },
-        Attack3: {
-            imageSrc: 'gameimgs/entities/warrior/Attack3.png',
-            frameRate: 4,
-            frameBuffer: 15,
-        },
-        Death: {
-            imageSrc: 'gameimgs/entities/warrior/Death.png',
-            frameRate: 6,
-            frameBuffer: 20,
-        },
-        GetHit: {
-            imageSrc: 'gameimgs/entities/warrior/TakeHit.png',
-            frameRate: 4,
-            frameBuffer: 5,
-        },
-    }
-});
+// const enemy = new Enemy({
+//     position: {
+//         x: 120,
+//         y: 300,
+//     },
+//     collisionBlocks,
+//     platformCollisionBlocks,
+//     imageSrc: '/gameimgs/entities/warrior/Idle.png',
+//     frameRate: 8,
+//     animations: {
+//         Idle: {
+//             imageSrc: '/gameimgs/entities/warrior/Idle.png',
+//             frameRate: 8,
+//             frameBuffer: 12,
+//         },
+//         IdleLeft: {
+//             imageSrc: '/gameimgs/entities/warrior/IdleLeft.png',
+//             frameRate: 8,
+//             frameBuffer: 12,
+//         },
+//         Run: {
+//             imageSrc: '/gameimgs/entities/warrior/Run.png',
+//             frameRate: 8,
+//             frameBuffer: 8,
+//         },
+//         RunLeft: {
+//             imageSrc: '/gameimgs/entities/warrior/RunLeft.png',
+//             frameRate: 8,
+//             frameBuffer: 8,
+//         },
+//         Jump: {
+//             imageSrc: '/gameimgs/entities/warrior/Jump.png',
+//             frameRate: 2,
+//             frameBuffer: 3,
+//         },
+//         JumpLeft: {
+//             imageSrc: '/gameimgs/entities/warrior/JumpLeft.png',
+//             frameRate: 2,
+//             frameBuffer: 3,
+//         },
+//         Fall: {
+//             imageSrc: '/gameimgs/entities/warrior/Fall.png',
+//             frameRate: 2,
+//             frameBuffer: 3,
+//         },
+//         FallLeft: {
+//             imageSrc: '/gameimgs/entities/warrior/FallLeft.png',
+//             frameRate: 2,
+//             frameBuffer: 3,
+//         },
+//         Attack1: {
+//             imageSrc: '/gameimgs/entities/warrior/Attack1.png',
+//             frameRate: 4,
+//             frameBuffer: 5,
+//         },
+//         Attack2: {
+//             imageSrc: '/gameimgs/entities/warrior/Attack2.png',
+//             frameRate: 4,
+//             frameBuffer: 10,
+//         },
+//         Attack3: {
+//             imageSrc: '/gameimgs/entities/warrior/Attack3.png',
+//             frameRate: 4,
+//             frameBuffer: 15,
+//         },
+//         Death: {
+//             imageSrc: '/gameimgs/entities/warrior/Death.png',
+//             frameRate: 6,
+//             frameBuffer: 20,
+//         },
+//         GetHit: {
+//             imageSrc: '/gameimgs/entities/warrior/TakeHit.png',
+//             frameRate: 4,
+//             frameBuffer: 5,
+//         },
+//     }
+// });
 
 const keys = {
     a: {
@@ -234,45 +234,8 @@ const defaultBackground = new Sprite({
         x: 0,
         y: 0,
     },
-    imageSrc: 'gameimgs/backgrounds/background.png',
+    imageSrc: '/gameimgs/backgrounds/platform/background.png',
 })
-
-// const layer1 = new Sprite({
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     imageSrc: 'gameimgs/backgrounds/layer-1.png',
-// })
-// const layer2 = new Sprite({
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     imageSrc: 'gameimgs/backgrounds/layer-2.png',
-// })
-// const layer3 = new Sprite({
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     imageSrc: 'gameimgs/backgrounds/layer-3.png',
-// })
-// const layer4 = new Sprite({
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     imageSrc: 'gameimgs/backgrounds/layer-4.png',
-// })
-// const layer5 = new Sprite({
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     imageSrc: 'gameimgs/backgrounds/layer-5.png',
-// })
-// let backgroundArray = [layer1, layer2, layer3, layer4, layer5];
 
 const backgroundImageHeight = 432;
 
@@ -343,9 +306,9 @@ function animate() {
     }
 
 
-    enemy.checkForHorizontalCanvasCollision();
-    enemy.update();
-    enemy.velocity.x = 0;
+    // enemy.checkForHorizontalCanvasCollision();
+    // enemy.update();
+    // enemy.velocity.x = 0;
 
     /*Create collision between objects*/
 
