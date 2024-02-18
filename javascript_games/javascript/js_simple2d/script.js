@@ -322,7 +322,7 @@ function animate() {
         }
     }
 }
-// animate();
+animate();
 
 
 let lastKey = '';
