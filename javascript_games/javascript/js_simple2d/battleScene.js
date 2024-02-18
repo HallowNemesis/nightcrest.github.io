@@ -43,7 +43,11 @@ function initBattle() {
 
             if (draggle.health <= 0) {
                 queue.push(() => {
+                    audio.battle.stop();
+                    audio.victory.play();
                     draggle.faint();
+
+                    
                 });
                 queue.push(() => {
                     gsap.to('#overlappingDiv', {
@@ -57,7 +61,7 @@ function initBattle() {
                             });
 
                             battle.initiated = false;
-
+                            audio.Map.play();
                         }
                     });
                 });
@@ -73,6 +77,7 @@ function initBattle() {
 
                 if (emby.health <= 0) {
                     queue.push(() => {
+                        audio.battle.stop();
                         emby.faint();
                     });
 
@@ -88,6 +93,7 @@ function initBattle() {
                                 });
 
                                 battle.initiated = false;
+                                audio.Map.play();
                             }
                         });
                     });
