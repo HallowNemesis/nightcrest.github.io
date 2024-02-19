@@ -239,7 +239,7 @@ class Monster extends Sprite {
 
                         renderedSprites.splice(1, 1);
                     }
-                })
+                });
 
 
                 break;

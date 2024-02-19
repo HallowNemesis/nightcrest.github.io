@@ -91,6 +91,7 @@ function moveBlocks(e) {
     let row4 = matrix[3]; 
   
     if (e.key === "ArrowLeft") { 
+       
         moveLeft(row1); 
         moveLeft(row2); 
         moveLeft(row3); 

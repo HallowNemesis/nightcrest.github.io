@@ -30,26 +30,59 @@
 		}
 
 		button {
-			width: 200px;
-			height: 50px;
+			width: 300px;
+			height: 300px;
 			text-align: center;
+			vertical-align: text-top;
 			background-color: darkblue;
 			color: white;
+			border: 1px solid black;
+			border-radius: 5px;
+			box-shadow: 2px 2px gray;
+			overflow: hidden;
 		}
-		header{
+
+		button:hover {
+			background-color: blue;
+			transition: 0.7s;
+		}
+
+		button:focus {
+			outline-color: transparent;
+			outline-style: solid;
+			box-shadow: 0 0 0 4px orchid;
+			transition: 0.7s;
+		}
+
+		button:active {
+			background-color: black;
+		}
+
+		header {
 			text-align: center;
 			align-items: center;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+
+		p {
+			font-size: 24px;
+			font-weight: bold;
 		}
 
 		table,
 		th,
 		td {
-			border: 1px solid black;
+			border: none;
 			border-collapse: collapse;
-			vertical-align: bottom;	
+			vertical-align: bottom;
 			text-align: center;
+			padding: 3px;
 
-			}
+		}
 	</style>
 </head>
 
@@ -70,27 +103,64 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 	<div>
-		<div class=" center">
-			<header>
-				<h5>Welcome to the </h5>
-				<h3>GAME HUB</h3>
-			</header>
-		</div>
+		<header style="margin-top: 100px;">
+			<h4 style="font-size: 45px; font-family: Narrow">Welcome to the </h4>
+			<h3 style="font-weight: bold; font-style: italic; font-size: 72px; font-family:Times">GAME HUB</h3>
+		</header>
+
 		<table>
 			<tr>
-				<td><a href="javascript_games/html/breakout.html"><button>Break Out</button></a></td>
-				<td><a href="javascript_games/html/snake.html"><button>Snake</button></a></td>
-				<td><a href="javascript_games/html/flappybird.html"><button>Flappy Bird</button></a></td>
-				<td><a href="javascript_games/html/2d-platformer.html"><button>Platform version 0.0.1</button></a></td>
+				<td><a href="javascript_games/html/breakout.html">
+						<button>
+							<p>Break Out</p>
+							<img src="/gameimgs/breakout.png"></img>
+						</button>
+					</a>
+				</td>
+				<td><a href="javascript_games/html/snake.html">
+						<button>
+							<p>Snake</p>
+							<img src="/gameimgs/Snake.png"></img>
+						</button>
+					</a></td>
+				<td><a href="javascript_games/html/flappybird.html">
+						<button>
+							<p>Flappy Bird</p>
+						</button>
+					</a></td>
+				<td><a href="javascript_games/html/2d-platformer.html">
+						<button>
+							<p>Platform version 0.0.1</p>
+						</button>
+					</a></td>
 			</tr>
 			<tr>
-				<td><a href="javascript_games/html/2048.html"><button>2048</button></a></td>
-				<td><a href="javascript_games/html/pong.html"><button>Pong</button></a></td>
-				<td><a href="#"><button>Coming Soon (Stick Fight)</button></a></td>
-				<td><a href="javascript_games/html/2d-pokegame.html"><button>pokegame</button></a></td>
+				<td><a href="javascript_games/html/2048.html">
+					<button>
+						<p>2048</p>
+						<img src="/gameimgs/2048.png"></img>
+					</button>
+				</a></td>
+				<td><a href="javascript_games/html/pong.html">
+					<button>
+						<p>Pong</p>
+
+					</button>
+				</a></td>
+				<td><a href="#">
+					<button>
+						<p>Coming Soon (Stick Fight)</p>
+					</button>
+				</a></td>
+				<td><a href="javascript_games/html/2d-pokegame.html">
+					<button>
+						<p>pokegame</p>
+
+					</button>
+				</a></td>
 
 			</tr>
 		</table>
