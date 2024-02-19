@@ -220,7 +220,7 @@ class Monster extends Sprite {
                     y: recipient.position.y,
                     onComplete: () => {
                         gsap.to(healthBar, {
-                            width: this.health + '%'
+                            width: recipient.health + '%'
                         });
 
                         gsap.to(recipient.position, {

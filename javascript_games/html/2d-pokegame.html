@@ -20,7 +20,7 @@
         }
 
         body {
-            background: black;
+            background: rgb(65, 65, 65);
         }
 
         h1 {
@@ -51,7 +51,7 @@
                 <a href="/about.html" class="button block black">About</a>
             </div>
             <div class="col s3">
-                <a href="/tempGameholder.html" class="button block black">Games</a>
+                <a href="/GameHub.html" class="button block black">Games</a>
             </div>
             <div class="col s3">
                 <a href="/#where" class="button block black">Where</a>
@@ -59,12 +59,12 @@
         </div>
     </div>
 
-    <div style="display: inline-block; position: relative; margin-top: 50px;">
+    <div style="display: inline-block; position: absolute; margin-top: 50px; top: 50%; left: 50%; transform: translate(-50%,-50%);">
         <div id="overlappingDiv"
             style="background-color: black; position: absolute; top: 0; right: 0; bottom: 0; left: 0; opacity: 0; pointer-events: none; z-index: 10;">
         </div>
 
-        <canvas></canvas>
+        <canvas style="border: 5px solid black; border-radius: 15px;"></canvas>
 
         <div id="userInterface" style="display: none;">
             <!-- Health Bar of Opponent-->
@@ -115,7 +115,15 @@
                 </div>
             </div>
         </div>
+        <div>
+            <h1 style="font-weight: bold;"> CONTROLS</h3>
+            <p style="font-size: 24px;">W - up</p>
+            <p style="font-size: 24px;"></pstyle>A - up</p>
+            <p style="font-size: 24px;"></p>S - up</p>
+            <p style="font-size: 24px;"></p>D - up</p>
+        </div>
     </div>
+    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js" integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="crossorigin="anonymous" referrerpolicy="no-referrer"></script>
