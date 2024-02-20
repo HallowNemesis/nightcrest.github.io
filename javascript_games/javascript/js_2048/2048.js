@@ -72,7 +72,11 @@ function moveBlocks(e) {
         e.key !== "ArrowLeft" && 
         e.key !== "ArrowRight" && 
         e.key !== "ArrowUp" && 
-        e.key !== "ArrowDown"
+        e.key !== "ArrowDown" &&
+        e.key !== "w" && 
+        e.key !== "a" && 
+        e.key !== "s" && 
+        e.key !== "d"
     ) { 
         return; 
     } 
@@ -90,26 +94,26 @@ function moveBlocks(e) {
     let row3 = matrix[2]; 
     let row4 = matrix[3]; 
   
-    if (e.key === "ArrowLeft") { 
+    if (e.key === "ArrowLeft" || e.key === "a") { 
        
         moveLeft(row1); 
         moveLeft(row2); 
         moveLeft(row3); 
         moveLeft(row4); 
     } 
-    if (e.key === "ArrowRight") { 
+    if (e.key === "ArrowRight" || e.key === "d") { 
         moveRight(row1); 
         moveRight(row2); 
         moveRight(row3); 
         moveRight(row4); 
     } 
-    if (e.key === "ArrowUp") { 
+    if (e.key === "ArrowUp" || e.key === "w") { 
         moveLeft(col1); 
         moveLeft(col2); 
         moveLeft(col3); 
         moveLeft(col4); 
     } 
-    if (e.key === "ArrowDown") { 
+    if (e.key === "ArrowDown" || e.key === "s") { 
         moveRight(col1); 
         moveRight(col2); 
         moveRight(col3); 

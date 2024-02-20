@@ -1,158 +1,108 @@
-// Background scrolling speed 
-let move_speed = 3; 
-    
-// Gravity constant value 
-let gravity = 0.3; 
-    
-// Getting reference to the bird element 
-let bird = document.querySelector('.bird'); 
-    
-// Getting bird element properties 
-let bird_props = bird.getBoundingClientRect(); 
-let background = document.querySelector('.play-board').getBoundingClientRect(); 
-    
-// Getting reference to the score element 
-let score_val = document.querySelector('.score_val'); 
-let message = document.querySelector('.message'); 
-let score_title = document.querySelector('.score_title'); 
-    
-// Setting initial game state to start 
-let game_state = 'Start'; 
-    
-// Add an eventlistener for key presses 
-document.addEventListener('keydown', (e) => { 
-    
-  // Start the game if enter key is pressed 
-  if (e.key == 'Enter' && 
-      game_state != 'Play') { 
-    document.querySelectorAll('.pipe_sprite') 
-              .forEach((e) => { 
-      e.remove(); 
-    }); 
-    bird.style.top = '40vh'; 
-    game_state = 'Play'; 
-    message.innerHTML = ''; 
-    score_title.innerHTML = 'Score : '; 
-    score_val.innerHTML = '0'; 
-    play(); 
-  } 
-}); 
-function play() { 
-  function move() { 
-      
-    // Detect if game has ended 
-    if (game_state != 'Play') return; 
-      
-    // Getting reference to all the pipe elements 
-    let pipe_sprite = document.querySelectorAll('.pipe_sprite'); 
-    pipe_sprite.forEach((element) => { 
-        
-      let pipe_sprite_props = element.getBoundingClientRect(); 
-      bird_props = bird.getBoundingClientRect(); 
-        
-      // Delete the pipes if they have moved out 
-      // of the screen hence saving memory 
-      if (pipe_sprite_props.right <= 0) { 
-        element.remove(); 
-      } else { 
-        // Collision detection with bird and pipes 
-        if ( 
-          bird_props.left < pipe_sprite_props.left + 
-          pipe_sprite_props.width && 
-          bird_props.left + 
-          bird_props.width > pipe_sprite_props.left && 
-          bird_props.top < pipe_sprite_props.top + 
-          pipe_sprite_props.height && 
-          bird_props.top + 
-          bird_props.height > pipe_sprite_props.top 
-        ) { 
-            
-          // Change game state and end the game 
-          // if collision occurs 
-          game_state = 'End'; 
-          message.innerHTML = 'Press Enter To Restart'; 
-          message.style.left = '28vw'; 
-          return; 
-        } else { 
-          // Increase the score if player 
-          // has the successfully dodged the  
-          if ( 
-            pipe_sprite_props.right < bird_props.left && 
-            pipe_sprite_props.right +  
-            move_speed >= bird_props.left && 
-            element.increase_score == '1'
-          ) { 
-            score_val.innerHTML = +score_val.innerHTML + 1; 
-          } 
-          element.style.left =  
-            pipe_sprite_props.left - move_speed + 'px'; 
-        } 
-      } 
-    }); 
-  
-    requestAnimationFrame(move); 
-  } 
-  requestAnimationFrame(move); 
-  
-  let bird_dy = 0; 
-  function apply_gravity() { 
-    if (game_state != 'Play') return; 
-    bird_dy = bird_dy + gravity; 
-    document.addEventListener('keydown', (e) => { 
-      if (e.key == 'ArrowUp' || e.key == ' ') { 
-        bird_dy = -7.6; 
-      } 
-    }); 
-  
-    // Collision detection with bird and 
-    // window top and bottom 
-  
-    if (bird_props.top <= 0 || 
-        bird_props.bottom >= background.bottom) { 
-      game_state = 'End'; 
-      message.innerHTML = 'Press Enter To Restart'; 
-      message.style.left = '28vw'; 
-      return; 
-    } 
-    bird.style.top = bird_props.top + bird_dy + 'px'; 
-    bird_props = bird.getBoundingClientRect(); 
-    requestAnimationFrame(apply_gravity); 
-  } 
-  requestAnimationFrame(apply_gravity); 
-  
-  let pipe_seperation = 0; 
-    
-  // Constant value for the gap between two pipes 
-  let pipe_gap = 35; 
-  function create_pipe() { 
-    if (game_state != 'Play') return; 
-      
-    // Create another set of pipes 
-    // if distance between two pipe has exceeded 
-    // a predefined value 
-    if (pipe_seperation > 115) { 
-      pipe_seperation = 0 
-        
-      // Calculate random position of pipes on y axis 
-      let pipe_posi = Math.floor(Math.random() * 43) + 8; 
-      let pipe_sprite_inv = document.createElement('div'); 
-      pipe_sprite_inv.className = 'pipe_sprite'; 
-      pipe_sprite_inv.style.top = pipe_posi - 70 + 'vh'; 
-      pipe_sprite_inv.style.left = '100vw'; 
-        
-      // Append the created pipe element in DOM 
-      document.body.appendChild(pipe_sprite_inv); 
-      let pipe_sprite = document.createElement('div'); 
-      pipe_sprite.className = 'pipe_sprite'; 
-      pipe_sprite.style.top = pipe_posi + pipe_gap + 'vh'; 
-      pipe_sprite.style.left = '100vw'; 
-      pipe_sprite.increase_score = '1'; 
-        
-      // Append the created pipe element in DOM 
-      document.body.appendChild(pipe_sprite); 
-    } 
-    pipe_seperation++; 
-    requestAnimationFrame(create_pipe); 
-  } 
-  requestAnimationFrame(create_pipe); 
-} 
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const img = new Image();
+img.src = "https://i.ibb.co/Q9yv5Jk/flappy-bird-set.png";
+
+// general settings
+let gamePlaying = false;
+const gravity = .5;
+const speed = 4.2;
+const size = [51, 36];
+const jump = -11.5;
+const cTenth = (canvas.width / 10);
+
+let index = 0,
+  bestScore = 0,
+  flight,
+  flyHeight,
+  currentScore,
+  pipe;
+
+// pipe settings
+const pipeWidth = 78;
+const pipeGap = 270;
+const pipeLoc = () => (Math.random() * ((canvas.height - (pipeGap + pipeWidth)) - pipeWidth)) + pipeWidth;
+
+const setup = () => {
+  currentScore = 0;
+  flight = jump;
+
+  // set initial flyHeight (middle of screen - size of the bird)
+  flyHeight = (canvas.height / 2) - (size[1] / 2);
+
+  // setup first 3 pipes
+  pipes = Array(3).fill().map((a, i) => [canvas.width + (i * (pipeGap + pipeWidth)), pipeLoc()]);
+}
+
+const render = () => {
+  // make the pipe and bird moving 
+  index++;
+
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // background first part 
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height, -((index * (speed / 2)) % canvas.width) + canvas.width, 0, canvas.width, canvas.height);
+  // background second part
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height, -(index * (speed / 2)) % canvas.width, 0, canvas.width, canvas.height);
+
+  // pipe display
+  if (gamePlaying) {
+    pipes.map(pipe => {
+      // pipe moving
+      pipe[0] -= speed;
+
+      // top pipe
+      ctx.drawImage(img, 432, 588 - pipe[1], pipeWidth, pipe[1], pipe[0], 0, pipeWidth, pipe[1]);
+      // bottom pipe
+      ctx.drawImage(img, 432 + pipeWidth, 108, pipeWidth, canvas.height - pipe[1] + pipeGap, pipe[0], pipe[1] + pipeGap, pipeWidth, canvas.height - pipe[1] + pipeGap);
+
+      // give 1 point & create new pipe
+      if (pipe[0] <= -pipeWidth) {
+        currentScore++;
+        // check if it's the best score
+        bestScore = Math.max(bestScore, currentScore);
+
+        // remove & create new pipe
+        pipes = [...pipes.slice(1), [pipes[pipes.length - 1][0] + pipeGap + pipeWidth, pipeLoc()]];
+        console.log(pipes);
+      }
+
+      // if hit the pipe, end
+      if ([
+        pipe[0] <= cTenth + size[0],
+        pipe[0] + pipeWidth >= cTenth,
+        pipe[1] > flyHeight || pipe[1] + pipeGap < flyHeight + size[1]
+      ].every(elem => elem)) {
+        gamePlaying = false;
+        setup();
+      }
+    })
+  }
+  // draw bird
+  if (gamePlaying) {
+    ctx.drawImage(img, 432, Math.floor((index % 9) / 3) * size[1], ...size, cTenth, flyHeight, ...size);
+    flight += gravity;
+    flyHeight = Math.min(flyHeight + flight, canvas.height - size[1]);
+  } else {
+    ctx.drawImage(img, 432, Math.floor((index % 9) / 3) * size[1], ...size, ((canvas.width / 2) - size[0] / 2), flyHeight, ...size);
+    flyHeight = (canvas.height / 2) - (size[1] / 2);
+    // text accueil
+    ctx.fillText(`Best score : ${bestScore}`, canvas.width/4, 245);
+    ctx.fillText('Click to play', canvas.width/4, 535);
+    ctx.font = "bold 30px courier";
+  }
+
+  document.getElementById('bestScore').innerHTML = `Best : ${bestScore}`;
+  document.getElementById('currentScore').innerHTML = `Current : ${currentScore}`;
+
+  // tell the browser to perform anim
+  window.requestAnimationFrame(render);
+}
+
+// launch setup
+setup();
+img.onload = render;
+
+// start game
+document.addEventListener('click', () => gamePlaying = true);
+window.onclick = () => flight = jump;

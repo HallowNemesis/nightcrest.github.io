@@ -31,5 +31,22 @@ const monsters = {
         isEnemy: true,
         name: 'Draggle',
         attacks: [attacks.Tackle, attacks.Watershot]
+    },
+    Ghost: {
+        position: {
+            x: 800,
+            y: 100
+        },
+        image: {
+            src: '/gameimgs/backgrounds/simple2d/ghostevo.png'
+        },
+        frames: {
+            max: 5,
+            hold: 40
+        },
+        animate: true,
+        isEnemy: true,
+        name: 'Ghost',
+        attacks: [attacks.Fireball, attacks.Watershot]
     }
 };

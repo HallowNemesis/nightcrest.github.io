@@ -164,7 +164,7 @@ function drawVictory() {
 }
 
 loadBricks({ brickColumnCount, brickRowCount });
-function draw() {
+function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBricks({ brickColumnCount, brickRowCount });
     drawBall();
@@ -220,7 +220,7 @@ function draw() {
         drawVictory();
         gameState = 'start';
     }
-    requestAnimationFrame(draw);
+    requestAnimationFrame(animate);
 }
 
-draw();
+animate();

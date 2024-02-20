@@ -15,6 +15,7 @@ let board_coord = board.getBoundingClientRect();
 let paddle_common =
     document.querySelector('.paddle').getBoundingClientRect();
 
+let pdy, pdx;
 let dx = Math.floor(Math.random() * 4) + 3;
 let dy = Math.floor(Math.random() * 4) + 3;
 let dxd = Math.floor(Math.random() * 2);
@@ -36,18 +37,20 @@ document.addEventListener('keydown', (e) => {
     }
     if (gameState == 'play') {
         if (e.key == 'w') {
+            pdy = -1;
             paddle_1.style.top =
                 Math.max(
                     board_coord.top,
-                    paddle_1_coord.top - window.innerHeight * 0.06
+                    paddle_1_coord.top - window.innerHeight * 0.1
                 ) + 'px';
             paddle_1_coord = paddle_1.getBoundingClientRect();
         }
         if (e.key == 's') {
+            pdx = 1;
             paddle_1.style.top =
                 Math.min(
                     board_coord.bottom - paddle_common.height,
-                    paddle_1_coord.top + window.innerHeight * 0.06
+                    paddle_1_coord.top + window.innerHeight * 0.1
                 ) + 'px';
             paddle_1_coord = paddle_1.getBoundingClientRect();
         }

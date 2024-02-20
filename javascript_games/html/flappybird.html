@@ -13,75 +13,31 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3259707707501940"
         crossorigin="anonymous"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: slategrey;
-        }
-
-        .wrapper {
-            width: 100vh;
-            height: 100vw;
-            display: flex;
-            overflow: hidden;
-            flex-direction: column;
-            border: solid black 5px;
-            background: #293447;
-        }
-
-
-        .bird {
-            height: 100px;
-            width: 100px;
-            position: fixed;
-            top: 40vmin;
-            left: 30vmin;
-            z-index: 100;
-        }
-
-        .pipe_sprite {
-            position: fixed;
-            top: 40vmin;
-            left: 70vmin;
-            height: 70vmin;
-            width: 6vw;
-            border: 3px solid black;
-            background-color: green;
-        }
-
-        .message {
-            position: fixed;
-            z-index: 10;
-            height: 10vmin;
-            font-size: 10vmin;
-            font-weight: 100;
-            color: black;
-            top: 12vmin;
-            left: 20vmin;
+            margin: 0;
             text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            user-select: none;
         }
 
-        .score {
-            position: fixed;
-            z-index: 10;
-            height: 6vmin;
-            font-size: 6vmin;
-            font-weight: 100;
-            color: goldenrod;
-            top: 0;
-            left: 0;
+        header {
+            margin: 0 auto;
+            width: 600px;
         }
 
-        .score_val {
-            color: gold;
+        h1 {
+            background: url("https://i.ibb.co/Q9yv5Jk/flappy-bird-set.png") 0% 588;
+            padding: 1.2rem 0;
+            margin: 0;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 6px;
+            background: #5EE270;
         }
     </style>
 </head>
@@ -104,17 +60,16 @@
         </div>
     </div>
 
-    <div class="wrapper">
-        <img class="bird" src="/gameimgs/logo.png" alt="bird-img">
-        <div class="message">
-            Press Enter To Start Game
+    <header>
+        <h1>Floppy Bird</h1>
+        <div class="score-container">
+            <div id="bestScore"></div>
+            <div id="currentScore"></div>
         </div>
-        <div class="score">
-            <span class="score_title"></span>
-            <span class="score_val"></span>
-        </div>
-    </div>
-    <!-- <img class="game-bird" src="/gameimgs/birdanimation.png" alt="animation-img"> -->
+    </header>
+
+    <canvas id="canvas" width="430" height="700"></canvas>
+
     <script src="/javascript_games/javascript/js_flappyBird/flappybird.js"></script>
 </body>
 

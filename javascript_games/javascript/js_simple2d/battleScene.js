@@ -10,6 +10,7 @@ const battleBackground = new Sprite({
 
 let draggle;
 let emby;
+let ghost;
 let renderedSprites;
 let battleAnimationId;
 let queue;
@@ -21,15 +22,16 @@ function initBattle() {
     document.querySelector('#playerHealthBar').style.width = '100%'
     document.querySelector('#attacksBox').replaceChildren()
   
-    draggle = new Monster(monsters.Draggle)
-    emby = new Monster(monsters.Emby)
-    renderedSprites = [draggle, emby]
-    queue = []
+    draggle = new Monster(monsters.Draggle);
+    emby = new Monster(monsters.Emby);
+    ghost = new Monster(monsters.Ghost);
+    renderedSprites = [ emby, ghost];
+    queue = [];
   
     emby.attacks.forEach((attack) => {
-      const button = document.createElement('button')
-      button.innerHTML = attack.name
-      document.querySelector('#attacksBox').append(button)
+      const button = document.createElement('button');
+      button.innerHTML = attack.name;
+      document.querySelector('#attacksBox').append(button);
     })
   
     // our event listeners for our buttons (attack)
@@ -38,13 +40,13 @@ function initBattle() {
         const selectedAttack = attacks[e.currentTarget.innerHTML];
         emby.attack({
           attack: selectedAttack,
-          recipient: draggle,
+          recipient: ghost,
           renderedSprites
         });
   
-        if (draggle.health <= 0) {
+        if (ghost.health <= 0) {
           queue.push(() => {
-            draggle.faint();
+            ghost.faint();
           });
           queue.push(() => {
             // fade back to black
@@ -68,10 +70,10 @@ function initBattle() {
   
         // draggle or enemy attacks right here
         const randomAttack =
-          draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)];
+          ghost.attacks[Math.floor(Math.random() * ghost.attacks.length)];
   
         queue.push(() => {
-          draggle.attack({
+          ghost.attack({
             attack: randomAttack,
             recipient: emby,
             renderedSprites
@@ -116,7 +118,7 @@ function initBattle() {
     battleAnimationId = window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
   
-  
+    
     renderedSprites.forEach((sprite) => {
       sprite.draw();
     });
