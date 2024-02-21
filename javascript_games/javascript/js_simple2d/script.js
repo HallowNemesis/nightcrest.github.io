@@ -148,7 +148,6 @@ function animate() {
         renderable.draw()
     })
 
-
     let moving = true;
     player.animate = false;
     if (battle.initiated) return;
