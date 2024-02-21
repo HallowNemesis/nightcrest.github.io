@@ -153,7 +153,7 @@ function drawLives() {
 function drawGameOver() {
     ctx.font = "28px Arial";
     ctx.fillStyle = "#0095DD";
-    let msg = 'Game Over. You Loose';
+    let msg = 'Game Over. You Lose';
     ctx.fillText(msg, rect.width / 2 - msg.length * 7, rect.height / 2 + 50);
 }
 function drawVictory() {
