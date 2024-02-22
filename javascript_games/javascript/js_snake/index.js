@@ -1,7 +1,9 @@
 const playBoard = document.querySelector(".play-board");
+
 const scoreElement = document.querySelector(".score");
 const highscoreElement = document.querySelector(".high-score");
-const controls = document.querySelectorAll(".controls");
+const controls = document.querySelectorAll(".controls i");
+const message = document.getElementById("message");
 
 let gameOver = false;
 let foodX, foodY;
@@ -34,15 +36,17 @@ const changeDirection = (e) => {
     }
 }
 
-controls.forEach(key =>{
-    key.addEventListener("click", () => changeDirection({key: key.dataset.key}));
-});
+controls.forEach(button => button.addEventListener("click", () => changeDirection({ key: button.dataset.key })));
+
 
 
 const handleGameOver = () => {
     clearInterval(setIntervalId);
-    alert("Game Over... Press Okay to retry");
-    location.reload();
+
+    message.innerHTML = 'Game Over! Releod to begin';
+
+    
+    // location.reload();
 }
 
 const initGame = () => {
@@ -86,4 +90,4 @@ const initGame = () => {
 }
 changeFoodPosition();
 setIntervalId = setInterval(initGame, 125);
-document.addEventListener("keydown", changeDirection);
+document.addEventListener("keyup", changeDirection);

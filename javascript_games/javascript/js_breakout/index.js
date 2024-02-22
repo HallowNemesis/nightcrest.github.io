@@ -42,7 +42,7 @@ document.addEventListener("mousemove", mouseMoveHandler, false);
 
 function keyDownHandler(e) {
     if (e.key === 'Enter' && gameState !== 'play') {
-
+        
         if(brickColumnCount * brickRowCount == score){
             lives += 1;
             score = 0;
@@ -186,7 +186,7 @@ function animate() {
         else if (y + dy > rect.height - ballRadius) {
             if (x > paddleX && x < paddleX + paddleWidth) {
                 dy = -dy;
-                dy += dy > 0 ? 1 : -1;
+                dy += dy > 0 ? 0.5 : -0.5;
             }
             else {
                 lives--;
@@ -214,11 +214,13 @@ function animate() {
         score = 0;
         totalScore = 0;
         gameState = 'start';
+        // message.innerHTML = 'Press Enter to Play Pong';
     }
     
     if (brickColumnCount * brickRowCount == score) {
         drawVictory();
         gameState = 'start';
+        // message.innerHTML = 'Press Enter to Play Pong';
     }
     requestAnimationFrame(animate);
 }

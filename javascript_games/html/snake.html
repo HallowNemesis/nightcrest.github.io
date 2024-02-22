@@ -27,6 +27,7 @@
             border-radius: 5px;
             border-radius: 5px;
             background: #293447;
+            text-align: center;
         }
 
         .game-details {
@@ -85,8 +86,13 @@
             }
 
             .controls i {
-                padding: 15px 0;
-                font-size: 1rem;
+                padding: 25px 0;
+                text-align: center;
+                font-size: 1.3rem;
+                color: #B8C6DC;
+                width: calc(100% / 4);
+                cursor: pointer;
+                border-right: 1px solid #171B26;
             }
         }
     </style>
@@ -122,7 +128,11 @@
             <span class="score">Score: 0</span>
             <span class="high-score">High Score: 0</span>
         </div>
+
+        <span id="message" style="color: fuchsia;"></span>
+
         <div class="play-board"></div>
+
         <div class="controls">
             <i data-key="ArrowLeft">↑</i>
             <i data-key="ArrowUp">↓</i>

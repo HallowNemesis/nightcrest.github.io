@@ -14,7 +14,7 @@ let ball_coord = initial_ball_coord;
 let board_coord = board.getBoundingClientRect();
 let paddle_common = document.querySelector('.paddle').getBoundingClientRect();
 
-let pdy1, pdx1, pdx2, pdy2;
+let pdy1, pdy2;
 let dx = Math.floor(Math.random() * 4) + 3;
 let dy = Math.floor(Math.random() * 4) + 3;
 let dxd = Math.floor(Math.random() * 2);
@@ -35,7 +35,10 @@ document.addEventListener('keydown', (e) => {
         }
     }
     if (gameState == 'play') {
+
+
         if (e.key == 'w') {
+            pdy1 = -1;
             paddle_1.style.top =
                 Math.max(
                     board_coord.top,
@@ -44,6 +47,7 @@ document.addEventListener('keydown', (e) => {
             paddle_1_coord = paddle_1.getBoundingClientRect();
         }
         if (e.key == 's') {
+            pdy1 = 1;
             paddle_1.style.top =
                 Math.min(
                     board_coord.bottom - paddle_common.height,
@@ -53,6 +57,7 @@ document.addEventListener('keydown', (e) => {
         }
 
         if (e.key == 'ArrowUp') {
+            pdy2 = -1;
             paddle_2.style.top =
                 Math.max(
                     board_coord.top,
@@ -61,6 +66,7 @@ document.addEventListener('keydown', (e) => {
             paddle_2_coord = paddle_2.getBoundingClientRect();
         }
         if (e.key == 'ArrowDown') {
+            pdy2 = 1;
             paddle_2.style.top =
                 Math.min(
                     board_coord.bottom - paddle_common.height,

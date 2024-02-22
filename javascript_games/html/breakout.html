@@ -35,6 +35,17 @@
 			border: solid darkred 5px;
 			border-radius: 5px;
 		}
+
+		.message {
+            position: fixed;
+            /* color: #48426d; */
+            height: 10vh;
+            text-align: center;
+            width: 70vw;
+            color: darkslategray;
+            left: 15vw;
+            margin: 30px auto auto auto;
+        }
 	</style>
 </head>
 
@@ -55,8 +66,13 @@
 			</div>
 		</div>
 	</div>
-	
-	<canvas id="screen" width="600" height="480"></canvas>
+
+	<div>
+		<canvas id="screen" width="600" height="480"></canvas>
+		<h1 class="message">
+			Press Enter to Play
+		</h1>
+	</div>
 
 	<script src="/javascript_games/javascript/js_breakout/index.js"></script>
 </body>
