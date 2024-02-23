@@ -5,7 +5,7 @@ const highscoreElement = document.querySelector(".high-score");
 const controls = document.querySelectorAll(".controls i");
 const message = document.getElementById("message");
 
-let gameOver = false;
+let gameState = 'start';
 let foodX, foodY;
 let snakeX = 5, snakeY = 10;
 let snakeBody = [];
@@ -21,18 +21,24 @@ const changeFoodPosition = () => {
 
 const changeDirection = (e) => {
 
-    if ((e.key === "ArrowUp" || e.key === "w") && velocityY != 1) {
-        velocityX = 0;
-        velocityY = -1;
-    } else if ((e.key === "ArrowDown"  || e.key === "s") && velocityY != -1) {
-        velocityX = 0;
-        velocityY = 1;
-    } else if ((e.key === "ArrowLeft"  || e.key === "a")&& velocityX != 1) {
-        velocityX = -1;
-        velocityY = 0;
-    } else if ((e.key === "ArrowRight"  || e.key === "d") && velocityX != -1) {
-        velocityX = 1;
-        velocityY = 0;
+    if (gameState != 'play' && e.key === 'Enter') {
+        gameState = 'play';
+    }
+
+    if (gameState === 'play') {
+        if ((e.key === "ArrowUp" || e.key === "w") && velocityY != 1) {
+            velocityX = 0;
+            velocityY = -1;
+        } else if ((e.key === "ArrowDown" || e.key === "s") && velocityY != -1) {
+            velocityX = 0;
+            velocityY = 1;
+        } else if ((e.key === "ArrowLeft" || e.key === "a") && velocityX != 1) {
+            velocityX = -1;
+            velocityY = 0;
+        } else if ((e.key === "ArrowRight" || e.key === "d") && velocityX != -1) {
+            velocityX = 1;
+            velocityY = 0;
+        }
     }
 }
 
@@ -42,16 +48,27 @@ controls.forEach(button => button.addEventListener("click", () => changeDirectio
 
 const handleGameOver = () => {
     clearInterval(setIntervalId);
+    message.innerHTML = 'Game Over! Press Enter To Play Again';
 
-    message.innerHTML = 'Game Over! Releod to begin';
+    document.addEventListener('keyup', (e) => {
+        if(e.key === 'Enter'){
+            location.reload();
 
-    
-    // location.reload();
+        }
+    });
 }
 
 const initGame = () => {
-    if (gameOver) return handleGameOver();
+    if (gameState === 'gameover') {
+        return handleGameOver();
+    }
     let htmlMarkup = `<div class="food" style="grid-area: ${foodY} / ${foodX} "></div>`;
+    if(gameState === 'start'){
+        message.innerHTML = 'Press Enter to Play';
+    } else{
+        message.innerHTML = '';
+
+    }
 
     if (snakeX === foodX && snakeY === foodY) {
         changeFoodPosition();
@@ -75,14 +92,14 @@ const initGame = () => {
     snakeY += velocityY;
 
     if (snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
-        gameOver = true;
+        gameState = 'gameover';
     }
 
     for (let i = 0; i < snakeBody.length; i++) {
         htmlMarkup += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]} "></div>`;
 
-        if(i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]){
-            gameOver = true;
+        if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
+            gameState = 'gameover';
         }
     }
 
