@@ -77,6 +77,10 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+function movePaddles(){
+    
+}
+
 function moveBall() {
     if (
         ball_coord.left <= board_coord.left ||
@@ -99,6 +103,7 @@ function moveBall() {
 function animate(){
 
     if(gameState === 'play'){
+        movePaddles();
         moveBall();
         
         ball.style.top = ball_coord.top + dy * (dyd == 0 ? -1 : 1) + 'px';

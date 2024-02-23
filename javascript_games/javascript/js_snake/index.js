@@ -50,7 +50,12 @@ const handleGameOver = () => {
     clearInterval(setIntervalId);
     message.innerHTML = 'Game Over! Press Enter To Play Again';
 
-    document.addEventListener('keyup', (e) => {
+    document.addEventListener('click', () => {
+        location.reload();
+    });
+
+
+    document.addEventListener('keydown', (e) => {
         if(e.key === 'Enter'){
             location.reload();
 
@@ -107,4 +112,5 @@ const initGame = () => {
 }
 changeFoodPosition();
 setIntervalId = setInterval(initGame, 125);
+document.addEventListener('click', () => gameState = 'play');
 document.addEventListener("keyup", changeDirection);

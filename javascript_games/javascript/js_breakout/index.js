@@ -39,6 +39,33 @@ function loadBricks({ brickColumnCount, brickRowCount }) {
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
+document.addEventListener('mousedown', () => {
+    if (gameState == 'start') {
+
+        if(brickColumnCount * brickRowCount == score){
+            lives += 1;
+            score = 0;
+            brickColumnCount = Math.floor(Math.random() * 6 + 1);
+            loadBricks({ brickColumnCount, brickRowCount });
+            drawBricks({ brickColumnCount, brickRowCount });
+        }
+
+        gameState = gameState == 'start' ? 'play' : 'start';
+        if (lives <= 0) {
+            lives = 3;
+            brickColumnCount = Math.floor(Math.random() * 6 + 1);
+            loadBricks({ brickColumnCount, brickRowCount });
+            drawBricks({ brickColumnCount, brickRowCount });
+        }
+        if (gameState === 'win') {
+            gameState = 'play';
+            loadBricks({ brickColumnCount: Math.floor(Math.random() * 6 + 1), brickRowCount });
+            drawBricks({ brickColumnCount: Math.floor(Math.random() * 6 + 1), brickRowCount });
+        }
+        dx = Math.random() < 0.5 ? speed : -speed;
+        dy = Math.random() < 0.5 ? speed : -speed;
+    }
+});
 
 function keyDownHandler(e) {
     if (e.key === 'Enter' && gameState !== 'play') {
@@ -87,6 +114,7 @@ function mouseMoveHandler(e) {
     if (relativeX > paddleWidth && relativeX < rect.width) {
         paddleX = relativeX - paddleWidth;
     }
+
 }
 function collisionDetection({ brickColumnCount, brickRowCount }) {
     for (var c = 0; c < brickColumnCount; c++) {
