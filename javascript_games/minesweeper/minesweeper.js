@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let squares = [];
     let isGameover = false;
 
+    grid.addEventListener('contextmenu', function(event) {
+
+      event.preventDefault(); 
+
+    });
+    
     function createBoard() {
 
         flagsLeft.innerHTML = bombAmount;
