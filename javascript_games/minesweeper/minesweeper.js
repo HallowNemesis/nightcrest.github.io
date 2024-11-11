@@ -8,14 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let flags = 0;
     let squares = [];
     let isGameover = false;
-
-    const myElement = document.getElementById("myElement");
-    
-    myElement.addEventListener('contextmenu', function(event) {
-
-      event.preventDefault(); 
-
-    });
     
     function createBoard() {
 
@@ -37,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 click(square);
             });
 
-            square.addEventListener('contextmenu', function () {
+            square.addEventListener('contextmenu', function (e) {
+                e.preventDefault(); 
                 addFlag(square);
             });
         }
