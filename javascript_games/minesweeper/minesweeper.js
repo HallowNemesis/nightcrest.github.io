@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let squares = [];
     let isGameover = false;
 
-    grid.addEventListener('contextmenu', function(event) {
+    const myElement = document.getElementById("myElement");
+    
+    myElement.addEventListener('contextmenu', function(event) {
 
       event.preventDefault(); 
 
